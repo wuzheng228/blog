@@ -1,0 +1,8 @@
+logging:
+  level:
+    root: info # springboot框架本身的级别
+    com.zzspace.blog: debug
+  file:
+    name: log/bolg.log
+server:
+  port: 8081

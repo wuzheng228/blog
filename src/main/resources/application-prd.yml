@@ -1,0 +1,6 @@
+
+logging:
+  level:
+    root: warn # springboot框架本身的级别
+  file:
+    name: log/bolg.log
