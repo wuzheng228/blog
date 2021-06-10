@@ -47,19 +47,27 @@
     <!--内容-->
     <div class="m-container-small m-padded-tb-big">
        <div class="ui container">
-           <form action="#" class="ui form segment" method="post">
+           <div class="ui mini success message close" th:unless="${#strings.isEmpty(message)}">
+               <i class="close icon"></i>
+               <div class="header" th:text="_">提示:</div>
+               <p th:text="${message}">现在你可以用你选择的用户名登录了</p>
+           </div>
+           <div class="ui form secondary segment">
+               <input type="hidden" name="pageNo" value="1">
                <div class="inline fields">
                    <div class="field">
                        <input type="text" name="title" placeholder="标题">
                    </div>
                    <div class="field">
                        <div class="ui selection dropdown">
-                           <input type="hidden" name="type">
+                           <input type="hidden" name="typeId">
                            <i class="dropdown icon"></i>
                            <div class="default text">分类</div>
                            <div class="menu">
-                               <div class="item" data-value="1">错误日志</div>
+                               <div th:each="type, iterStat : ${types}" th:text="${type.getName()}" class="item" data-value="1" th:data-value="${type.getId()}">错误日志</div>
+                               <!--/*-->
                                <div class="item" data-value="2">开发手册</div>
+                               <!--*/-->
                            </div>
                        </div>
                    </div>
@@ -70,53 +78,60 @@
                        </div>
                    </div>
                    <div class="field">
-                       <button class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
+                       <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
                    </div>
                </div>
-           </form>
-           <table class="ui celled table">
-               <thead>
-                    <tr>
-                        <th></th>
-                        <th>标题</th>
-                        <th>类型</th>
-                        <th>推荐</th>
-                        <th>更新时间</th>
-                        <th>操作</th>
-                    </tr>
-               </thead>
-               <tbody>
-                    <td>1</td>
-                    <td>可以练习清单</td>
-                    <td>认知升级</td>
-                    <td>是</td>
-                    <td>2021-05-08 09:19</td>
-                    <td>
-                        <a href="#" class="ui mini teal button">编辑</a>
-                        <a href="#" class="ui mini red button">删除</a>
-                    </td>
-               </tbody>
-               <tfoot>
-                    <tr>
-                        <th colspan="6">
-                            <div class="ui pagination menu">
-                                <a class="icon item">
-                                    <i class="left chevron icon"></i>
-                                </a>
-                                <a class="item">1</a>
-                                <a class="item">2</a>
-                                <a class="item">3</a>
-                                <a class="item">4</a>
-                                <a class="item">5</a>
-                                <a class="icon item">
-                                    <i class="right chevron icon"></i>
-                                </a>
-                            </div>
-                            <div class="ui right floated blue button">新增</div>
-                        </th>
-                    </tr>
-               </tfoot>
-           </table>
+           </div>
+           <div id="table-container">
+               <table th:fragment="blogList" class="ui compact celled table">
+                   <thead>
+                   <tr>
+                       <th></th>
+                       <th>标题</th>
+                       <th>类型</th>
+                       <th>推荐</th>
+                       <th>更新时间</th>
+                       <th>操作</th>
+                   </tr>
+                   </thead>
+                       <tbody>
+                           <tr th:each="blog,iterStat: ${page.getPageData()}">
+                               <td th:text="${iterStat.count}">1</td>
+                               <td th:text="${blog.getTitle()}">可以练习清单</td>
+                               <td th:text="${blog.getType().getName()}">认知升级</td>
+                               <td th:text="${blog.getAppreciationOn()?'是':'否'}">是</td>
+                               <td th:text="${blog.getGmtModified()}">2021-05-08 09:19</td>
+                               <td>
+                                   <a href="#" th:href="@{/admin/blog/input(id=${blog.getId()})}" class="ui mini teal button">编辑</a>
+                                   <a href="#" th:href="@{/admin/blog/delete(id=${blog.getId()})}" class="ui mini red button">删除</a>
+                               </td>
+                           </tr>
+                       </tbody>
+
+                   <tfoot >
+                       <tr>
+                           <th colspan="6">
+                               <div class="ui pagination menu" th:if="${page.getTotal() != 0}">
+                                   <a onclick="page(this)" th:attr="data-page=${page.getPrevPage()}"  class="icon item">
+                                       <i class="left chevron icon"></i>
+                                   </a>
+                                   <a th:each="pageNum: ${#numbers.sequence(page.startNav, page.endNav)}" th:text="${pageNum}" th:classappend="${pageNum==page.curpage?'active':''}" class="item">1</a>
+                                   <!--/*-->
+                                   <a class="item">2</a>
+                                   <a class="item">3</a>
+                                   <a class="item">4</a>
+                                   <a class="item">5</a>
+                                   <!--*/-->
+                                   <a onclick="page(this)" th:attr="data-page=${page.getNextPage()}" class="icon item">
+                                       <i class="right chevron icon"></i>
+                                   </a>
+                               </div>
+                               <a href="#" th:href="@{/admin/blog/input}" class="ui right floated blue button">新增</a>
+                           </th>
+                       </tr>
+                   </tfoot>
+               </table>
+           </div>
        </div>
     </div>
     <!--底部-->
@@ -155,7 +170,7 @@
             <p class="m-text-thin m-text-space m-opacity-tiny">CopyRight@2021-2019 warms</p>
         </div>
     </footer>
-<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <!--/*/</th:block>/*/-->
@@ -166,6 +181,39 @@
     $('.ui.dropdown').dropdown({
         on : 'hover'
     });
+    $('.ui.checkbox').checkbox({
+        onChecked: function() {
+            console.log($("[name='isRecommend']").prop("checked"));
+        },
+        onUnchecked: function () {
+            console.log(1);
+            console.log($("[name='isRecommend']").prop("checked"));
+        }
+    });
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade')
+            ;
+        })
+    ;
+    function page(obj) {
+        $("[name='pageNo']").val($(obj).data("page"));
+        loadData();
+    }
+    $("#search-btn").click(function () {
+        $("[name='pageNo']").val(1);
+        loadData();
+    });
+    function loadData() {
+        $("#table-container").load(/*[[@{/admin/blog/search}]]*/"/admin/blog/search", {
+            title : $("[name='title']").val(),
+            typeId : $("[name='typeId']").val(),
+            recommend : $("[name='recommend']").prop('checked'),
+            pageNo : $("[name='pageNo']").val()
+        });
+    }
 </script>
 </body>
 </html>

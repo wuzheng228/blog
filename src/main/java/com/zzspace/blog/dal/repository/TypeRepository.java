@@ -24,18 +24,22 @@ public class TypeRepository {
     }
 
     public TypeDO findTypeById(int id) {
-        return null;
+        return typeMapper.selectByPrimaryKey(id);
     }
 
     public PageDTO<TypeDO> listType(Integer start, Integer pageSize) {
         TypeExample example = new TypeExample();
         long count = typeMapper.countByExample(example);
-        PageDTO<TypeDO> pageDTO = new PageDTO<>(start, pageSize, 2, (int) count);
+        PageDTO<TypeDO> pageDTO = new PageDTO<>(start, pageSize, 2, count);
         example.setOffset((pageDTO.getCurpage() - 1) * pageDTO.getPageSize());
         example.setLimit(pageDTO.getPageSize());
         List<TypeDO> typeDOS = typeMapper.selectByExample(example);
         pageDTO.setPageData(typeDOS);
         return pageDTO;
+    }
+
+    public List<TypeDO> listType() {
+        return typeMapper.selectByExample(new TypeExample());
     }
 
     public TypeDO findTypeByName(String name) {

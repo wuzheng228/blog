@@ -1,5 +1,7 @@
 package com.zzspace.blog.model.dto;
 
+import com.zzspace.blog.model.query.Pageable;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,13 +11,16 @@ import java.util.List;
 public class PageDTO<T> implements Serializable {
 
     private final static int DEFAULT_START_PAGE = 1;
-    private final static int DEFAULT_PAGE_SIZE = 4;
+    private final static int DEFAULT_PAGE_SIZE = 10;
     private final static int DEFAULT_NAV_COUNT = 2;
-
+    // 当前页码
     private Integer curpage = DEFAULT_START_PAGE;
+    // 每页的条数
     private Integer pageSize = DEFAULT_PAGE_SIZE;
+    // 中间导航条的个数
     private Integer navCount = DEFAULT_NAV_COUNT;
-    private int total;
+    // 总记录数
+    private Long total;
 
     private int nextPage;
     private int prevPage;
@@ -29,7 +34,11 @@ public class PageDTO<T> implements Serializable {
 
     private List<T> pageData;
 
-    public PageDTO(Integer curpage, Integer pageSize, Integer navCount, int total) {
+    public PageDTO(Pageable pageable, Long total) {
+        this(pageable.getPageNo(), pageable.getPageSize(), null, total);
+    }
+
+    public PageDTO(Integer curpage, Integer pageSize, Integer navCount, Long total) {
         if (curpage != null) {
             this.curpage = curpage;
         }
@@ -83,11 +92,11 @@ public class PageDTO<T> implements Serializable {
         this.navCount = navCount;
     }
 
-    public int getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 
@@ -156,7 +165,7 @@ public class PageDTO<T> implements Serializable {
     }
 
     public static void main(String[] args) {
-        PageDTO pu = new PageDTO(8, 10, 2, 89);
+        PageDTO pu = new PageDTO(8, 10, 2, 89l);
         System.out.println("总页数：" + pu.getPageCount());
         System.out.println("上一页：" + pu.getPrevPage());
         System.out.println("下一页：" + pu.getNextPage());

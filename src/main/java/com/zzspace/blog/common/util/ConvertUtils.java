@@ -1,8 +1,9 @@
 package com.zzspace.blog.common.util;
 
+import com.zzspace.blog.common.anno.DateFormat;
+
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 76973 on 2021/6/5 9:06
@@ -14,7 +15,10 @@ public class ConvertUtils {
      * @param tClass 目标DO对象
      */
     public static <T> T convert(Object object, Class<T> tClass) {
-        Map<String, Field> name2Filed = new HashMap<>();
+        if (object == null) {
+            return null;
+        }
+        Map<String, Field> name2Filed = new HashMap<>();// 目标类对象的键值对
         Class<?> sClass = object.getClass();
         try {
             T target = tClass.newInstance();
@@ -29,9 +33,15 @@ public class ConvertUtils {
                 String name = field.getName();
                 if (name2Filed.containsKey(name)) {
                     Field matched = name2Filed.get(name);
-                    Object value = field.get(object);
-                    if (value != null) {
-                        matched.set(target, value);
+                    DateFormat needDateFormat = matched.getAnnotation(DateFormat.class);
+                    if (needDateFormat != null) {
+                        Date value = (Date)field.get(object);
+                        matched.set(target, DateUtils.formatDateToString(value, needDateFormat.pattern()));
+                    } else {
+                        Object value = field.get(object);
+                        if (value != null) {
+                            matched.set(target, value);
+                        }
                     }
                 }
             }
@@ -40,5 +50,14 @@ public class ConvertUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static <T,D> List<T> convertList(List<D> s, Class<T> tClass) {
+        List<T> res = new ArrayList<>();
+        for (D obj : s) {
+            T convert = convert(obj, tClass);
+            res.add(convert);
+        }
+        return res;
     }
 }

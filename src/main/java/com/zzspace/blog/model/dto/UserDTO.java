@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by 76973 on 2021/5/16 21:43
  */
 public class UserDTO implements Serializable {
+    private Integer id;
     private String username;
     private String email;
 
@@ -31,5 +32,13 @@ public class UserDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

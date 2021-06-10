@@ -375,76 +375,6 @@ public class BlogExample {
             return (Criteria) this;
         }
 
-        public Criteria andContentIsNull() {
-            addCriterion("content is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentIsNotNull() {
-            addCriterion("content is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentEqualTo(String value) {
-            addCriterion("content =", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotEqualTo(String value) {
-            addCriterion("content <>", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentGreaterThan(String value) {
-            addCriterion("content >", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentGreaterThanOrEqualTo(String value) {
-            addCriterion("content >=", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentLessThan(String value) {
-            addCriterion("content <", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentLessThanOrEqualTo(String value) {
-            addCriterion("content <=", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentLike(String value) {
-            addCriterion("content like", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotLike(String value) {
-            addCriterion("content not like", value, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentIn(List<String> values) {
-            addCriterion("content in", values, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotIn(List<String> values) {
-            addCriterion("content not in", values, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentBetween(String value1, String value2) {
-            addCriterion("content between", value1, value2, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andContentNotBetween(String value1, String value2) {
-            addCriterion("content not between", value1, value2, "content");
-            return (Criteria) this;
-        }
-
         public Criteria andFirstPictureIsNull() {
             addCriterion("first_picture is null");
             return (Criteria) this;
@@ -645,243 +575,303 @@ public class BlogExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnIsNull() {
-            addCriterion("is_appreciation_on is null");
+        public Criteria andAppreciationOnIsNull() {
+            addCriterion("appreciation_on is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnIsNotNull() {
-            addCriterion("is_appreciation_on is not null");
+        public Criteria andAppreciationOnIsNotNull() {
+            addCriterion("appreciation_on is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnEqualTo(Boolean value) {
-            addCriterion("is_appreciation_on =", value, "isAppreciationOn");
+        public Criteria andAppreciationOnEqualTo(Boolean value) {
+            addCriterion("appreciation_on =", value, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnNotEqualTo(Boolean value) {
-            addCriterion("is_appreciation_on <>", value, "isAppreciationOn");
+        public Criteria andAppreciationOnNotEqualTo(Boolean value) {
+            addCriterion("appreciation_on <>", value, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnGreaterThan(Boolean value) {
-            addCriterion("is_appreciation_on >", value, "isAppreciationOn");
+        public Criteria andAppreciationOnGreaterThan(Boolean value) {
+            addCriterion("appreciation_on >", value, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("is_appreciation_on >=", value, "isAppreciationOn");
+        public Criteria andAppreciationOnGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("appreciation_on >=", value, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnLessThan(Boolean value) {
-            addCriterion("is_appreciation_on <", value, "isAppreciationOn");
+        public Criteria andAppreciationOnLessThan(Boolean value) {
+            addCriterion("appreciation_on <", value, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnLessThanOrEqualTo(Boolean value) {
-            addCriterion("is_appreciation_on <=", value, "isAppreciationOn");
+        public Criteria andAppreciationOnLessThanOrEqualTo(Boolean value) {
+            addCriterion("appreciation_on <=", value, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnIn(List<Boolean> values) {
-            addCriterion("is_appreciation_on in", values, "isAppreciationOn");
+        public Criteria andAppreciationOnIn(List<Boolean> values) {
+            addCriterion("appreciation_on in", values, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnNotIn(List<Boolean> values) {
-            addCriterion("is_appreciation_on not in", values, "isAppreciationOn");
+        public Criteria andAppreciationOnNotIn(List<Boolean> values) {
+            addCriterion("appreciation_on not in", values, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_appreciation_on between", value1, value2, "isAppreciationOn");
+        public Criteria andAppreciationOnBetween(Boolean value1, Boolean value2) {
+            addCriterion("appreciation_on between", value1, value2, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppreciationOnNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_appreciation_on not between", value1, value2, "isAppreciationOn");
+        public Criteria andAppreciationOnNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("appreciation_on not between", value1, value2, "appreciationOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnIsNull() {
-            addCriterion("is_copyright_on is null");
+        public Criteria andCopyrightOnIsNull() {
+            addCriterion("copyright_on is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnIsNotNull() {
-            addCriterion("is_copyright_on is not null");
+        public Criteria andCopyrightOnIsNotNull() {
+            addCriterion("copyright_on is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnEqualTo(Boolean value) {
-            addCriterion("is_copyright_on =", value, "isCopyrightOn");
+        public Criteria andCopyrightOnEqualTo(Boolean value) {
+            addCriterion("copyright_on =", value, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnNotEqualTo(Boolean value) {
-            addCriterion("is_copyright_on <>", value, "isCopyrightOn");
+        public Criteria andCopyrightOnNotEqualTo(Boolean value) {
+            addCriterion("copyright_on <>", value, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnGreaterThan(Boolean value) {
-            addCriterion("is_copyright_on >", value, "isCopyrightOn");
+        public Criteria andCopyrightOnGreaterThan(Boolean value) {
+            addCriterion("copyright_on >", value, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("is_copyright_on >=", value, "isCopyrightOn");
+        public Criteria andCopyrightOnGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("copyright_on >=", value, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnLessThan(Boolean value) {
-            addCriterion("is_copyright_on <", value, "isCopyrightOn");
+        public Criteria andCopyrightOnLessThan(Boolean value) {
+            addCriterion("copyright_on <", value, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnLessThanOrEqualTo(Boolean value) {
-            addCriterion("is_copyright_on <=", value, "isCopyrightOn");
+        public Criteria andCopyrightOnLessThanOrEqualTo(Boolean value) {
+            addCriterion("copyright_on <=", value, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnIn(List<Boolean> values) {
-            addCriterion("is_copyright_on in", values, "isCopyrightOn");
+        public Criteria andCopyrightOnIn(List<Boolean> values) {
+            addCriterion("copyright_on in", values, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnNotIn(List<Boolean> values) {
-            addCriterion("is_copyright_on not in", values, "isCopyrightOn");
+        public Criteria andCopyrightOnNotIn(List<Boolean> values) {
+            addCriterion("copyright_on not in", values, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_copyright_on between", value1, value2, "isCopyrightOn");
+        public Criteria andCopyrightOnBetween(Boolean value1, Boolean value2) {
+            addCriterion("copyright_on between", value1, value2, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCopyrightOnNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_copyright_on not between", value1, value2, "isCopyrightOn");
+        public Criteria andCopyrightOnNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("copyright_on not between", value1, value2, "copyrightOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnIsNull() {
-            addCriterion("is_comment_on is null");
+        public Criteria andRecommendIsNull() {
+            addCriterion("recommend is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnIsNotNull() {
-            addCriterion("is_comment_on is not null");
+        public Criteria andRecommendIsNotNull() {
+            addCriterion("recommend is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnEqualTo(Boolean value) {
-            addCriterion("is_comment_on =", value, "isCommentOn");
+        public Criteria andRecommendEqualTo(Boolean value) {
+            addCriterion("recommend =", value, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnNotEqualTo(Boolean value) {
-            addCriterion("is_comment_on <>", value, "isCommentOn");
+        public Criteria andRecommendNotEqualTo(Boolean value) {
+            addCriterion("recommend <>", value, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnGreaterThan(Boolean value) {
-            addCriterion("is_comment_on >", value, "isCommentOn");
+        public Criteria andRecommendGreaterThan(Boolean value) {
+            addCriterion("recommend >", value, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("is_comment_on >=", value, "isCommentOn");
+        public Criteria andRecommendGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("recommend >=", value, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnLessThan(Boolean value) {
-            addCriterion("is_comment_on <", value, "isCommentOn");
+        public Criteria andRecommendLessThan(Boolean value) {
+            addCriterion("recommend <", value, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnLessThanOrEqualTo(Boolean value) {
-            addCriterion("is_comment_on <=", value, "isCommentOn");
+        public Criteria andRecommendLessThanOrEqualTo(Boolean value) {
+            addCriterion("recommend <=", value, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnIn(List<Boolean> values) {
-            addCriterion("is_comment_on in", values, "isCommentOn");
+        public Criteria andRecommendIn(List<Boolean> values) {
+            addCriterion("recommend in", values, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnNotIn(List<Boolean> values) {
-            addCriterion("is_comment_on not in", values, "isCommentOn");
+        public Criteria andRecommendNotIn(List<Boolean> values) {
+            addCriterion("recommend not in", values, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_comment_on between", value1, value2, "isCommentOn");
+        public Criteria andRecommendBetween(Boolean value1, Boolean value2) {
+            addCriterion("recommend between", value1, value2, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsCommentOnNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_comment_on not between", value1, value2, "isCommentOn");
+        public Criteria andRecommendNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("recommend not between", value1, value2, "recommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedIsNull() {
-            addCriterion("is_realeased is null");
+        public Criteria andCommentOnIsNull() {
+            addCriterion("comment_on is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedIsNotNull() {
-            addCriterion("is_realeased is not null");
+        public Criteria andCommentOnIsNotNull() {
+            addCriterion("comment_on is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedEqualTo(Boolean value) {
-            addCriterion("is_realeased =", value, "isRealeased");
+        public Criteria andCommentOnEqualTo(Boolean value) {
+            addCriterion("comment_on =", value, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedNotEqualTo(Boolean value) {
-            addCriterion("is_realeased <>", value, "isRealeased");
+        public Criteria andCommentOnNotEqualTo(Boolean value) {
+            addCriterion("comment_on <>", value, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedGreaterThan(Boolean value) {
-            addCriterion("is_realeased >", value, "isRealeased");
+        public Criteria andCommentOnGreaterThan(Boolean value) {
+            addCriterion("comment_on >", value, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("is_realeased >=", value, "isRealeased");
+        public Criteria andCommentOnGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("comment_on >=", value, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedLessThan(Boolean value) {
-            addCriterion("is_realeased <", value, "isRealeased");
+        public Criteria andCommentOnLessThan(Boolean value) {
+            addCriterion("comment_on <", value, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedLessThanOrEqualTo(Boolean value) {
-            addCriterion("is_realeased <=", value, "isRealeased");
+        public Criteria andCommentOnLessThanOrEqualTo(Boolean value) {
+            addCriterion("comment_on <=", value, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedIn(List<Boolean> values) {
-            addCriterion("is_realeased in", values, "isRealeased");
+        public Criteria andCommentOnIn(List<Boolean> values) {
+            addCriterion("comment_on in", values, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedNotIn(List<Boolean> values) {
-            addCriterion("is_realeased not in", values, "isRealeased");
+        public Criteria andCommentOnNotIn(List<Boolean> values) {
+            addCriterion("comment_on not in", values, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_realeased between", value1, value2, "isRealeased");
+        public Criteria andCommentOnBetween(Boolean value1, Boolean value2) {
+            addCriterion("comment_on between", value1, value2, "commentOn");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealeasedNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_realeased not between", value1, value2, "isRealeased");
+        public Criteria andCommentOnNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("comment_on not between", value1, value2, "commentOn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedIsNull() {
+            addCriterion("realeased is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedIsNotNull() {
+            addCriterion("realeased is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedEqualTo(Boolean value) {
+            addCriterion("realeased =", value, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedNotEqualTo(Boolean value) {
+            addCriterion("realeased <>", value, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedGreaterThan(Boolean value) {
+            addCriterion("realeased >", value, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("realeased >=", value, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedLessThan(Boolean value) {
+            addCriterion("realeased <", value, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedLessThanOrEqualTo(Boolean value) {
+            addCriterion("realeased <=", value, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedIn(List<Boolean> values) {
+            addCriterion("realeased in", values, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedNotIn(List<Boolean> values) {
+            addCriterion("realeased not in", values, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedBetween(Boolean value1, Boolean value2) {
+            addCriterion("realeased between", value1, value2, "realeased");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealeasedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("realeased not between", value1, value2, "realeased");
             return (Criteria) this;
         }
 

@@ -9,6 +9,7 @@ import com.zzspace.blog.service.TypeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by 76973 on 2021/5/24 22:22
@@ -29,7 +30,7 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public TypeDTO findTypeById(int id) {
         TypeDO typeDO = typeRepository.findTypeById(id);
-        return null;
+        return ConvertUtils.convert(typeDO, TypeDTO.class);
     }
 
     @Override
@@ -44,6 +45,12 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public PageDTO<TypeDO> listType(Integer start, Integer pageSize) {
         return typeRepository.listType(start, pageSize);
+    }
+
+    @Override
+    public List<TypeDTO> listType() {
+        List<TypeDO> typeDOS = typeRepository.listType();
+        return ConvertUtils.convertList(typeDOS, TypeDTO.class);
     }
 
     @Override

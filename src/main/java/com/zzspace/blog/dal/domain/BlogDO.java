@@ -31,12 +31,6 @@ public class BlogDO implements Serializable {
     private Integer userId;
 
     /**
-     * content (255)<br>
-     *内容
-     */ 
-    private String content;
-
-    /**
      * first_picture (255)<br>
      *首图
      */ 
@@ -49,37 +43,43 @@ public class BlogDO implements Serializable {
     private String flag;
 
     /**
-     * view (10)<br>
+     * view (10)默认值 [0]<br>
      *阅读量
      */ 
     private Integer view;
 
     /**
-     * is_appreciation_on (1)默认值 [b'1']<br>
+     * appreciation_on (1)默认值 [b'1']<br>
      *赞赏是否开启
      */ 
-    private Boolean isAppreciationOn;
+    private Boolean appreciationOn;
 
     /**
-     * is_copyright_on (1)默认值 [b'1']<br>
+     * copyright_on (1)默认值 [b'1']<br>
      *版权是否开启
      */ 
-    private Boolean isCopyrightOn;
+    private Boolean copyrightOn;
 
     /**
-     * is_comment_on (1)默认值 [b'1']<br>
+     * recommend (1)默认值 [b'1']<br>
+     *是否推荐
+     */ 
+    private Boolean recommend;
+
+    /**
+     * comment_on (1)默认值 [b'1']<br>
      *评论是否开启
      */ 
-    private Boolean isCommentOn;
+    private Boolean commentOn;
 
     /**
-     * is_realeased (1)<br>
+     * realeased (1)<br>
      *是否发布
      */ 
-    private Boolean isRealeased;
+    private Boolean realeased;
 
     /**
-     * is_deleted (1)必填<br>
+     * is_deleted (1)默认值 [b'0']<br>
      *是否逻辑删除
      */ 
     private Boolean isDeleted;
@@ -95,6 +95,12 @@ public class BlogDO implements Serializable {
      *更新时间
      */ 
     private Date gmtModified;
+
+    /**
+     * content (2147483647)<br>
+     *内容
+     */ 
+    private String content;
 
     private static final long serialVersionUID = 1L;
 
@@ -183,27 +189,6 @@ public class BlogDO implements Serializable {
     }
 
     /**
-     * content (255)<br>
-     * 获得 内容
-     */ 
-    public String getContent() {
-        return content;
-    }
-
-    public BlogDO withContent(String content) {
-        this.setContent(content);
-        return this;
-    }
-
-    /**
-     * content (255)<br>
-     * 设置 内容
-     */ 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    /**
      * first_picture (255)<br>
      * 获得 首图
      */ 
@@ -246,7 +231,7 @@ public class BlogDO implements Serializable {
     }
 
     /**
-     * view (10)<br>
+     * view (10)默认值 [0]<br>
      * 获得 阅读量
      */ 
     public Integer getView() {
@@ -259,7 +244,7 @@ public class BlogDO implements Serializable {
     }
 
     /**
-     * view (10)<br>
+     * view (10)默认值 [0]<br>
      * 设置 阅读量
      */ 
     public void setView(Integer view) {
@@ -267,91 +252,112 @@ public class BlogDO implements Serializable {
     }
 
     /**
-     * is_appreciation_on (1)默认值 [b'1']<br>
+     * appreciation_on (1)默认值 [b'1']<br>
      * 获得 赞赏是否开启
      */ 
-    public Boolean getIsAppreciationOn() {
-        return isAppreciationOn;
+    public Boolean getAppreciationOn() {
+        return appreciationOn;
     }
 
-    public BlogDO withIsAppreciationOn(Boolean isAppreciationOn) {
-        this.setIsAppreciationOn(isAppreciationOn);
+    public BlogDO withAppreciationOn(Boolean appreciationOn) {
+        this.setAppreciationOn(appreciationOn);
         return this;
     }
 
     /**
-     * is_appreciation_on (1)默认值 [b'1']<br>
+     * appreciation_on (1)默认值 [b'1']<br>
      * 设置 赞赏是否开启
      */ 
-    public void setIsAppreciationOn(Boolean isAppreciationOn) {
-        this.isAppreciationOn = isAppreciationOn;
+    public void setAppreciationOn(Boolean appreciationOn) {
+        this.appreciationOn = appreciationOn;
     }
 
     /**
-     * is_copyright_on (1)默认值 [b'1']<br>
+     * copyright_on (1)默认值 [b'1']<br>
      * 获得 版权是否开启
      */ 
-    public Boolean getIsCopyrightOn() {
-        return isCopyrightOn;
+    public Boolean getCopyrightOn() {
+        return copyrightOn;
     }
 
-    public BlogDO withIsCopyrightOn(Boolean isCopyrightOn) {
-        this.setIsCopyrightOn(isCopyrightOn);
+    public BlogDO withCopyrightOn(Boolean copyrightOn) {
+        this.setCopyrightOn(copyrightOn);
         return this;
     }
 
     /**
-     * is_copyright_on (1)默认值 [b'1']<br>
+     * copyright_on (1)默认值 [b'1']<br>
      * 设置 版权是否开启
      */ 
-    public void setIsCopyrightOn(Boolean isCopyrightOn) {
-        this.isCopyrightOn = isCopyrightOn;
+    public void setCopyrightOn(Boolean copyrightOn) {
+        this.copyrightOn = copyrightOn;
     }
 
     /**
-     * is_comment_on (1)默认值 [b'1']<br>
+     * recommend (1)默认值 [b'1']<br>
+     * 获得 是否推荐
+     */ 
+    public Boolean getRecommend() {
+        return recommend;
+    }
+
+    public BlogDO withRecommend(Boolean recommend) {
+        this.setRecommend(recommend);
+        return this;
+    }
+
+    /**
+     * recommend (1)默认值 [b'1']<br>
+     * 设置 是否推荐
+     */ 
+    public void setRecommend(Boolean recommend) {
+        this.recommend = recommend;
+    }
+
+    /**
+     * comment_on (1)默认值 [b'1']<br>
      * 获得 评论是否开启
      */ 
-    public Boolean getIsCommentOn() {
-        return isCommentOn;
+    public Boolean getCommentOn() {
+        return commentOn;
     }
 
-    public BlogDO withIsCommentOn(Boolean isCommentOn) {
-        this.setIsCommentOn(isCommentOn);
+    public BlogDO withCommentOn(Boolean commentOn) {
+        this.setCommentOn(commentOn);
         return this;
     }
 
     /**
-     * is_comment_on (1)默认值 [b'1']<br>
+     * comment_on (1)默认值 [b'1']<br>
      * 设置 评论是否开启
      */ 
-    public void setIsCommentOn(Boolean isCommentOn) {
-        this.isCommentOn = isCommentOn;
+    public void setCommentOn(Boolean commentOn) {
+        this.commentOn = commentOn;
     }
 
     /**
-     * is_realeased (1)<br>
+     * realeased (1)<br>
      * 获得 是否发布
      */ 
-    public Boolean getIsRealeased() {
-        return isRealeased;
+    public Boolean getRealeased() {
+        return realeased;
     }
 
-    public BlogDO withIsRealeased(Boolean isRealeased) {
-        this.setIsRealeased(isRealeased);
+    public BlogDO withRealeased(Boolean realeased) {
+        this.setRealeased(realeased);
         return this;
     }
 
     /**
-     * is_realeased (1)<br>
+     * realeased (1)<br>
      * 设置 是否发布
      */ 
-    public void setIsRealeased(Boolean isRealeased) {
-        this.isRealeased = isRealeased;
+    public void setRealeased(Boolean realeased) {
+        this.realeased = realeased;
     }
 
     /**
-     * is_deleted (1)必填<br>
+     * is_deleted (1)默认值 [b'0']<br>
      * 获得 是否逻辑删除
      */ 
     public Boolean getIsDeleted() {
@@ -364,7 +370,7 @@ public class BlogDO implements Serializable {
     }
 
     /**
-     * is_deleted (1)必填<br>
+     * is_deleted (1)默认值 [b'0']<br>
      * 设置 是否逻辑删除
      */ 
     public void setIsDeleted(Boolean isDeleted) {
@@ -413,6 +419,27 @@ public class BlogDO implements Serializable {
         this.gmtModified = gmtModified;
     }
 
+    /**
+     * content (2147483647)<br>
+     * 获得 内容
+     */ 
+    public String getContent() {
+        return content;
+    }
+
+    public BlogDO withContent(String content) {
+        this.setContent(content);
+        return this;
+    }
+
+    /**
+     * content (2147483647)<br>
+     * 设置 内容
+     */ 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -423,17 +450,18 @@ public class BlogDO implements Serializable {
         sb.append(", title=").append(title);
         sb.append(", typeId=").append(typeId);
         sb.append(", userId=").append(userId);
-        sb.append(", content=").append(content);
         sb.append(", firstPicture=").append(firstPicture);
         sb.append(", flag=").append(flag);
         sb.append(", view=").append(view);
-        sb.append(", isAppreciationOn=").append(isAppreciationOn);
-        sb.append(", isCopyrightOn=").append(isCopyrightOn);
-        sb.append(", isCommentOn=").append(isCommentOn);
-        sb.append(", isRealeased=").append(isRealeased);
+        sb.append(", appreciationOn=").append(appreciationOn);
+        sb.append(", copyrightOn=").append(copyrightOn);
+        sb.append(", recommend=").append(recommend);
+        sb.append(", commentOn=").append(commentOn);
+        sb.append(", realeased=").append(realeased);
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtModified=").append(gmtModified);
+        sb.append(", content=").append(content);
         sb.append("]");
         return sb.toString();
     }
@@ -443,17 +471,18 @@ public class BlogDO implements Serializable {
         title("title", "title", "VARCHAR", false),
         typeId("type_id", "typeId", "INTEGER", false),
         userId("user_id", "userId", "INTEGER", false),
-        content("content", "content", "VARCHAR", false),
         firstPicture("first_picture", "firstPicture", "VARCHAR", false),
         flag("flag", "flag", "VARCHAR", false),
         view("view", "view", "INTEGER", true),
-        isAppreciationOn("is_appreciation_on", "isAppreciationOn", "BIT", false),
-        isCopyrightOn("is_copyright_on", "isCopyrightOn", "BIT", false),
-        isCommentOn("is_comment_on", "isCommentOn", "BIT", false),
-        isRealeased("is_realeased", "isRealeased", "BIT", false),
+        appreciationOn("appreciation_on", "appreciationOn", "BIT", false),
+        copyrightOn("copyright_on", "copyrightOn", "BIT", false),
+        recommend("recommend", "recommend", "BIT", false),
+        commentOn("comment_on", "commentOn", "BIT", false),
+        realeased("realeased", "realeased", "BIT", false),
         isDeleted("is_deleted", "isDeleted", "BIT", false),
         gmtCreated("gmt_created", "gmtCreated", "TIMESTAMP", false),
-        gmtModified("gmt_modified", "gmtModified", "TIMESTAMP", false);
+        gmtModified("gmt_modified", "gmtModified", "TIMESTAMP", false),
+        content("content", "content", "LONGVARCHAR", false);
 
         private static final String BEGINNING_DELIMITER = "`";
 
