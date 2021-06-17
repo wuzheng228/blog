@@ -31,6 +31,8 @@ public class BlogDTO implements Serializable {
      */
     private Integer userId;
 
+    private String username;
+
     /**
      * content (255)<br>
      *内容
@@ -147,6 +149,14 @@ public class BlogDTO implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getContent() {

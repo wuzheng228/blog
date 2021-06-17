@@ -24,4 +24,6 @@ public interface TypeService {
     TypeDTO findTypeByName(String name);
 
     int deleteById(int id);
+
+    List<TypeDTO> findTopKType(int k);
 }

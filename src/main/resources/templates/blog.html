@@ -44,28 +44,32 @@
                    <div class="item">
                        <img src="https://dummyimage.com/100x100/000/fff" alt="" class="ui avatar image">
                        <div class="content">
-                           <div class="header"><a href="#" class="header">Warms</a></div>
+                           <div class="header"><a href="#" th:text="${user.username}">Warms</a></div>
                        </div>
                    </div>
                    <div class="item">
-                       <i class="calendar icon"></i>2021-05-06
+                       <div>
+                           <i class="calendar icon" ></i><span th:text="${content.gmtCreated}">2021-05-06</span>
+                       </div>
                    </div>
                    <div class="item">
-                       <i class="eye icon"></i> 123
+                       <div class="middle aligned">
+                            <i class="eye icon"></i><span th:text="${content.view}"></span>
+                       </div>
                    </div>
                </div>
            </div>
            <!--图片-->
            <div class="ui attached segment">
-               <img src="https://dummyimage.com/800x450/000/fff" alt="" class="ui fluid rounded image">
+               <img th:src="${content.firstPicture}" src="https://dummyimage.com/800x450/000/fff" alt="" class="ui fluid rounded image">
            </div>
            <!--内容-->
            <div class="ui attached segment js-toc-content">
                <div class="ui right aligned container">
-                   <div class="ui orange basic label">原创</div>
+                   <div th:text="${content.flag}" class="ui orange basic label">原创</div>
                </div>
-               <h2 class="ui center aligned header">Java代理模式</h2>
-               <div id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb-large">
+               <h2 class="ui center aligned header" th:text="${content.title}">Java代理模式</h2>
+               <div th:utext="${content.content}" id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb-large">
                    <pre><code class="language-css">p { color: red }</code></pre>
                    <h1>中文网页重设与排版：<i class="serif">Typo.css</i></h1><br/>
 
@@ -469,12 +473,12 @@ h5,h6{font-size:1em;}
                </div>
            </div>
            <!--博客信息-->
-           <div class="ui attached positive message">
+           <div class="ui attached positive message" th:if="${content.copyrightOn}">
                 <div class="ui middle aligned grid">
                     <div class="eleven wide column">
                         <ui class="list">
-                            <li>作者:Warms</li>
-                            <li>发表时间：2021-05-09 09:08</li>
+                            <li>作者:<span th:text="${user.username}">warms</span></li>
+                            <li ><span th:text="${content.gmtCreated}">发表时间：2021-05-09 09:08</span></li>
                             <li>版权声明：自由转载-非商用-非衍生-保持署名 (创意共享3.0许可证) </li>
                             <li>公众号转载：请在文末添加作者二维码</li>
                         </ui>

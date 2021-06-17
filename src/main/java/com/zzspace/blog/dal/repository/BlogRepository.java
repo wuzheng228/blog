@@ -64,4 +64,52 @@ public class BlogRepository {
         blogDO.setIsDeleted(true);
         return blogMapper.updateByPrimaryKeySelective(blogDO);
     }
+
+    public List<BlogDO> queryIndexInfo(Pageable pageable) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andIsDeletedEqualTo(false);
+        example.setOffset(pageable.getOffset());
+        example.setLimit(pageable.getLimit());
+        example.setOrderByClause("gmt_created desc");
+        return blogMapper.selectByExample(example);
+    }
+
+    public long countBlogByTypeId(int id) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andIsDeletedEqualTo(false).andTypeIdEqualTo(id);
+        return blogMapper.countByExample(example);
+    }
+
+    public List<BlogDO> findTopKRecommend(int k) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andIsDeletedEqualTo(false).andAppreciationOnEqualTo(true)
+        .andRealeasedEqualTo(true);
+        example.setOrderByClause("gmt_modified desc");
+        example.setOffset(0);
+        example.setLimit(k);
+        return blogMapper.selectByExample(example);
+    }
+
+    public List<BlogDO> listBlogByPattern(String query, Pageable pageable) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andIsDeletedEqualTo(false)
+                .andRealeasedEqualTo(true)
+                .andCustomCriterion(String.format("MATCH(title, content) AGAINST('%s')", query));
+        example.setLimit(pageable.getLimit());
+        example.setOffset(pageable.getOffset());
+        return blogMapper.selectByExample(example);
+    }
+
+    public List<BlogDO> listBlogByLike(String query, Pageable pageable) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andIsDeletedEqualTo(false)
+                .andRealeasedEqualTo(true)
+                .andCustomCriterion("content like '%" + query + "%'");
+        example.or().andIsDeletedEqualTo(false)
+                .andRealeasedEqualTo(true)
+                .andTitleLike("'%" + query + "%'");
+        example.setOffset(pageable.getOffset());
+        example.setLimit(pageable.getLimit());
+        return blogMapper.selectByExample(example);
+    }
 }

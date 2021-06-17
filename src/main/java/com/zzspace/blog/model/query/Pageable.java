@@ -9,7 +9,7 @@ public class Pageable implements Serializable {
 
     private static final int DEFAULT_SATRT_ROW = 0;
     private static final int DEFAULT_PAGE_NO = 1;
-    private static final int DEFAULT_PAGE_SIZE = 4;
+    private static final int DEFAULT_PAGE_SIZE = 10;
 
     private int startRow = DEFAULT_SATRT_ROW;
     private int pageNo = DEFAULT_PAGE_NO;

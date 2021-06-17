@@ -3,6 +3,7 @@ package com.zzspace.blog.dal.repository;
 import com.zzspace.blog.dal.domain.UserDO;
 import com.zzspace.blog.dal.domain.UserExample;
 import com.zzspace.blog.dal.mapper.UserMapper;
+import com.zzspace.blog.model.dto.UserDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
@@ -24,5 +25,9 @@ public class UserRepository {
         List<UserDO> userDOS = userMapper.selectByExample(example);
         return CollectionUtils.isEmpty(userDOS) ? null : userDOS.get(0);
 //        return null;
+    }
+
+    public UserDO findUserById(int id) {
+        return userMapper.selectByPrimaryKey(id);
     }
 }

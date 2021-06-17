@@ -49,7 +49,7 @@ public class BlogController {
     @GetMapping("/input")
     public String toInputPage(@RequestParam(value = "id", required = false) Long id, Model model) {
         if (id != null) {
-            BlogDTO blog = blogService.findBlogById(id);
+            BlogDTO blog = blogService.findBlogById(id, false);
             if (blog == null) {
                 throw new NotFoundException("查无该博客");
             }

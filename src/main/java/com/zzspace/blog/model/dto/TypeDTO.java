@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * Created by 76973 on 2021/6/5 9:00
  */
-public class TypeDTO implements Serializable {
+public class TypeDTO implements Serializable, Comparable<TypeDTO>{
     /**
      * id (10)必填<br>
      *分类id
@@ -24,6 +24,8 @@ public class TypeDTO implements Serializable {
     @NotBlank(message = "请输入分类名称")
     @Size(min = 1, max = 64, message = "分类名称长度不能超过64")
     private String name;
+
+    private long blogNum;
 
     public TypeDTO() {
     }
@@ -44,11 +46,24 @@ public class TypeDTO implements Serializable {
         this.name = name;
     }
 
+    public long getBlogNum() {
+        return blogNum;
+    }
+
+    public void setBlogNum(long blogNum) {
+        this.blogNum = blogNum;
+    }
+
     @Override
     public String toString() {
         return "TypeDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(TypeDTO o) {
+        return Long.compare(this.blogNum, o.blogNum);
     }
 }

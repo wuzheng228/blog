@@ -7,4 +7,5 @@ import com.zzspace.blog.model.dto.UserDTO;
  */
 public interface UserService {
     UserDTO checkUser(String email, String password);
+    UserDTO findUserById(int id);
 }

@@ -1,6 +1,7 @@
 package com.zzspace.blog.common.util;
 
 import com.zzspace.blog.common.anno.DateFormat;
+import com.zzspace.blog.common.strategy.DateFormater;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -28,14 +29,14 @@ public class ConvertUtils {
                 name2Filed.put(field.getName(), field);
             }
             Field[] sourceField = sClass.getDeclaredFields();
-            for (Field field : sourceField) {
+            for (Field field : sourceField) { // field 为原对象的成员
                 field.setAccessible(true);
                 String name = field.getName();
-                if (name2Filed.containsKey(name)) {
+                if (name2Filed.containsKey(name) ) {
                     Field matched = name2Filed.get(name);
                     DateFormat needDateFormat = matched.getAnnotation(DateFormat.class);
                     if (needDateFormat != null) {
-                        Date value = (Date)field.get(object);
+                        Date value = (Date) field.get(object);
                         matched.set(target, DateUtils.formatDateToString(value, needDateFormat.pattern()));
                     } else {
                         Object value = field.get(object);
@@ -60,4 +61,52 @@ public class ConvertUtils {
         }
         return res;
     }
+
+    public static <T,D> List<T> convertList(List<D> s, Class<T> tClass, DateFormater formater) {
+        List<T> res = new ArrayList<>();
+        for (D obj : s) {
+            T convert = convert(obj, tClass, formater);
+            res.add(convert);
+        }
+        return res;
+    }
+
+    public static <T> T convert(Object object, Class<T> tClass, DateFormater formater) {
+        if (object == null) {
+            return null;
+        }
+        Map<String, Field> name2Filed = new HashMap<>();// 目标类对象的键值对
+        Class<?> sClass = object.getClass();
+        try {
+            T target = tClass.newInstance();
+            Field[] targetField = tClass.getDeclaredFields();
+            for (Field field : targetField) {
+                field.setAccessible(true);
+                name2Filed.put(field.getName(), field);
+            }
+            Field[] sourceField = sClass.getDeclaredFields();
+            for (Field field : sourceField) { // field 为原对象的成员
+                field.setAccessible(true);
+                String name = field.getName();
+                if (name2Filed.containsKey(name) ) {
+                    Field matched = name2Filed.get(name);
+                    DateFormat needDateFormat = matched.getAnnotation(DateFormat.class);
+                    if (needDateFormat != null) {
+                        Date value = (Date) field.get(object);
+                        matched.set(target, formater.parse(value));
+                    } else {
+                        Object value = field.get(object);
+                        if (value != null) {
+                            matched.set(target, value);
+                        }
+                    }
+                }
+            }
+            return target;
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

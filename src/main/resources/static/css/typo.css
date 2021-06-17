@@ -4,7 +4,7 @@
   font-size: 16px;
   font-weight: 300;
   line-height: 1.8;
-  text-align: justify;
+  /*text-align: justify;*/
 }
 
 /* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */

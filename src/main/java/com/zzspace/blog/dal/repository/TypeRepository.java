@@ -2,13 +2,16 @@ package com.zzspace.blog.dal.repository;
 
 import com.zzspace.blog.dal.domain.TypeDO;
 import com.zzspace.blog.dal.domain.TypeExample;
+import com.zzspace.blog.dal.mapper.BlogMapper;
 import com.zzspace.blog.dal.mapper.TypeMapper;
 import com.zzspace.blog.model.dto.PageDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Priority;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Created by 76973 on 2021/5/24 22:24
@@ -17,6 +20,8 @@ import java.util.List;
 public class TypeRepository {
     @Resource
     private TypeMapper typeMapper;
+    @Resource
+    private BlogMapper blogMapper;
 
     public TypeDO insertType(TypeDO typeDO) {
         int i = typeMapper.insertSelective(typeDO);
@@ -62,4 +67,5 @@ public class TypeRepository {
     public int deleteById(int id) {
         return typeMapper.deleteByPrimaryKey(id);
     }
+
 }

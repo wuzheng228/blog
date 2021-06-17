@@ -1,6 +1,6 @@
 /*------body-------*/
 body {
-    background: url("../images/bg.png");
+    background: url("../images/bg2.png");
 }
 
 .m-padding-mini {
@@ -129,6 +129,11 @@ body {
 /*-------shadow--------*/
 .m-shadow-small {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+/*--------cursor--------*/
+.m-cursor-style:hover {
+    cursor: pointer;
+    color: orange;
 }
 
 /*-------color---------*/

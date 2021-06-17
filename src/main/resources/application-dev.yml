@@ -6,3 +6,5 @@ logging:
     name: log/bolg.log
 server:
   port: 8081
+zzspace.blog:
+  topk: 6

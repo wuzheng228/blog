@@ -44,12 +44,51 @@
                                 <h3 class="ui teal header">博客</h3>
                             </div>
                             <div class="right aligned column">
-                                共 <h2 class="ui orange header m-inline-block m-text-thin">14</h2> 篇博客
+                                共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${indexInfo.total}">14</h2> 篇博客
                             </div>
                         </div>
                     </div>
                     <!--content-->
                     <div class="ui attached padded segment">
+                        <div class="ui padded vertical segment m-padded-tb-large m-mobile-clear" th:each="card:${indexInfo.pageData}">
+                            <div class="ui mobile reversed stackable grid">
+                                <div class="eleven wide column">
+                                    <h3 class="ui header m-cursor-style cardTitle" th:text="${card.title}" th:data-value="${card.id}">你知道什么是真正的财富自由吗</h3>
+                                    <p class="m-text">正确做好每一件事情的前提是清晰、正确的理解目标。而事实是我们很多人很多时候没有对目标的正确定义</p>
+                                    <div class="ui stackable grid">
+                                        <div class="middle aligned eleven wide column">
+                                            <div class="ui mini horizontal link list">
+                                                <div class="item">
+                                                    <img src="https://dummyimage.com/100x100/000/fff" alt="" class="ui avatar image">
+                                                    <div class="content">
+                                                        <div class="header"><a href="#" th:text="${card.username}">Warm</a></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item" >
+                                                    <div class="middle aligned">
+                                                        <i class="calendar icon"></i><span th:text="${card.gmtModified}">2021-05-06</span>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <div class="middle aligned">
+                                                        <i class="eye icon"> </i><span th:text="${card.view}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="#" class="ui teal basic label m-padding-mini m-text-thin" th:text="${card.type.name}">认知升级</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide column">
+                                    <a href="#" th:href="@{/index/show/{id}(id=${card.id})}" target="_blank">
+                                        <img th:src="${card.firstPicture}" src="https://dummyimage.com/800x450/000/fff" alt="" class="ui rounded image">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/*-->
                         <div class="ui padded vertical segment m-padded-tb-large m-mobile-clear">
                             <div class="ui mobile reversed stackable grid">
                                 <div class="eleven wide column">
@@ -152,49 +191,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ui padded vertical segment m-padded-tb-large m-mobile-clear">
-                            <div class="ui mobile reversed stackable grid">
-                                <div class="eleven wide column">
-                                    <h3 class="ui header">你知道什么是真正的财富自由吗</h3>
-                                    <p class="m-text">正确做好每一件事情的前提是清晰、正确的理解目标。而事实是我们很多人很多时候没有对目标的正确定义</p>
-                                    <div class="ui stackable grid">
-                                        <div class="eleven wide column">
-                                            <div class="ui mini horizontal link list">
-                                                <div class="item">
-                                                    <img src="https://dummyimage.com/100x100/000/fff" alt="" class="ui avatar image">
-                                                    <div class="content">
-                                                        <div class="header"><a href="#" class="header">Warms</a></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <i class="calendar icon"></i>2021-05-06
-                                                </div>
-                                                <div class="item">
-                                                    <i class="eye icon"></i> 123
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="right aligned five wide column">
-                                            <a href="#" class="ui teal basic label m-padding-mini m-text-thin">认知升级</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="five wide column">
-                                    <a href="#" target="_blank">
-                                        <img src="https://dummyimage.com/800x450/000/fff" alt="" class="ui rounded image">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <!--*/-->
                     </div>
                     <!--bottom-->
                     <div class="ui bottom attached segment">
-                        <div class="ui middle aligned two column grid">
+                        <div class="ui middle aligned three column grid">
                             <div class="column">
-                                <a href="" class="ui mini teal basic button">上一页</a>
+                                <a href="" th:href="@{/(pageNo=${indexInfo.getPrevPage()})}" class="ui teal basic button">上一页</a>
+                            </div>
+                            <div class="center aligned column">
+                                <div class="ui pagination menu">
+                                    <a th:href="@{/(pageNo=${pageNum})}" th:each="pageNum: ${#numbers.sequence(indexInfo.startNav, indexInfo.endNav)}" class="item" th:text="${pageNum}" th:classappend="${pageNum==indexInfo.curpage?'active':''}">2</a>
+                                    <!--/*-->
+                                    <a class="item">3</a>
+                                    <a class="item">4</a>
+                                    <a class="item">5</a>
+                                    <!--*/-->
+                                </div>
                             </div>
                             <div class="right aligned column">
-                                <a href="" class="ui mini teal basic button">下一页</a>
+                                <a href="" th:href="@{/(pageNo=${indexInfo.getNextPage()})}" class="ui teal basic button">下一页</a>
                             </div>
                         </div>
                     </div>
@@ -209,12 +225,17 @@
                                     <i class="idea icon"></i>分类
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="#" target="_blank">more <i class="icon angle double right"></i></a>
+                                    <a href="#"  target="_blank">more <i class="icon angle double right"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
                             <div class="ui fluid vertical menu">
+                                <a href="#" class="item" th:each="type : ${types}">
+                                    <span th:text="${type.name}">学习日志</span>
+                                    <div class="ui teal basic left pointing label" th:text="${type.blogNum}">13</div>
+                                </a>
+                                <!--/*-->
                                 <a href="#" class="item">
                                     学习日志
                                     <div class="ui teal basic left pointing label">13</div>
@@ -235,10 +256,7 @@
                                     学习日志
                                     <div class="ui teal basic left pointing label">13</div>
                                 </a>
-                                <a href="#" class="item">
-                                    学习日志
-                                    <div class="ui teal basic left pointing label">13</div>
-                                </a>
+                                <!--*/-->
                             </div>
                         </div>
                     </div>
@@ -296,8 +314,6 @@
                                 方法论
                                 <div class="detail">23</div>
                             </a>
-
-
                         </div>
                     </div>
                     <!--最新推荐-->
@@ -313,7 +329,10 @@
                             </div>
                         </div>
                         <div class="ui teal segment">
+                            <a th:each="blog : ${topKBlog}" href="#" target="_blank" class="m-black m-text-thin"><div th:text="${blog.title}"></div></a>
+                            <!--/*-->
                             <a href="#" target="_blank" class="m-black m-text-thin">用户故事 (User story)</a>
+                            <!--*/-->
                         </div>
                     </div>
                     <!--二维码-->
@@ -370,6 +389,9 @@
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     })
+    $('.cardTitle').click(function (obj) {
+        window.open("/index/show/" + $(this).attr("data-value"),"top");
+    });
 </script>
 </body>
 </html>
