@@ -51,4 +51,9 @@ public class TagService {
         return tagRepository.deleteTagById(id);
     }
 
+    public TagDTO findTagByName(TagDTO tagDTO) {
+        TagDO tagDO = tagRepository.findTypeByName(tagDTO.getName());
+        return ConvertUtils.convert(tagDO, TagDTO.class);
+    }
+
 }

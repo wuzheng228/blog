@@ -33,4 +33,10 @@ public class TagRepository extends BaseRepository<TagDO> {
         return tagMapper.deleteByPrimaryKey(id);
     }
 
+    public TagDO findTypeByName(String name) {
+        TagExample tagExample = new TagExample();
+        tagExample.createCriteria().andNameEqualTo(name);
+        return fetchOne(tagMapper.selectByExample(tagExample));
+    }
+
 }

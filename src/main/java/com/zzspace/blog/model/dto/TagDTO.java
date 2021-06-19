@@ -1,5 +1,6 @@
 package com.zzspace.blog.model.dto;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,8 @@ public class TagDTO implements Serializable {
 
     private Long id;
 
+
+    @NotBlank(message = "标签名不能为空")
     private String name;
 
     public Long getId() {
