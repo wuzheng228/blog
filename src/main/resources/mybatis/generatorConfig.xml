@@ -53,8 +53,8 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.zzspace.blog.dal.mapper" targetProject="src/main/java">
 
         </javaClientGenerator>
-        <table schema="blog" tableName="tb_blog" domainObjectName="Blog"/>
-<!--        <table schema="blog" tableName="tb_blog_tag" domainObjectName="BlogTag"-->
+<!--        <table schema="blog" tableName="tb_blog" domainObjectName="Blog"/>-->
+
 <!--               enableDeleteByExample="false" enableDeleteByPrimaryKey="false"/>-->
 <!--        <table schema="blog" tableName="tb_comment" domainObjectName="Comment"-->
 <!--               enableDeleteByExample="false" enableDeleteByPrimaryKey="false"/>-->
@@ -63,5 +63,11 @@
 <!--        <table schema="blog" tableName="tb_type" domainObjectName="Type"/>-->
 <!--        <table schema="blog" tableName="tb_user" domainObjectName="User" delimitIdentifiers="true"-->
 <!--               enableDeleteByExample="false" enableDeleteByPrimaryKey="false"/>-->
+<!--        <table schema="blog" tableName="tb_tag" domainObjectName="Tag">-->
+<!--            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;TagDO&gt;"/>-->
+<!--        </table>-->
+        <table schema="blog" tableName="tb_blog_tag" domainObjectName="BlogTag">
+            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;BlogTagDO&gt;"/>
+        </table>
     </context>
 </generatorConfiguration>
