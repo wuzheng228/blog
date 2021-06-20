@@ -6,6 +6,7 @@ import com.zzspace.blog.dal.mapper.BlogTagMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by 76973 on 2021/6/18 17:50
@@ -20,6 +21,12 @@ public class BlogTagRepository extends BaseRepository<BlogTagDO> {
         BlogTagExample blogTagExample = new BlogTagExample();
         blogTagExample.createCriteria().andTagIdEqualTo(id);
         return blogTagMapper.deleteByExample(blogTagExample);
+    }
+
+    public List<BlogTagDO> selectByBlogId(Long id) {
+        BlogTagExample blogTagExample = new BlogTagExample();
+        blogTagExample.createCriteria().andBlogIdEqualTo(id);
+        return blogTagMapper.selectByExample(blogTagExample);
     }
 
 }

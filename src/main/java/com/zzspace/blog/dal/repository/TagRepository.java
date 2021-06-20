@@ -25,6 +25,10 @@ public class TagRepository extends BaseRepository<TagDO> {
         return tagMapper.selectByExample(tagExample);
     }
 
+    public List<TagDO> listTag() {
+        return tagMapper.selectByExample(new TagExample());
+    }
+
     public Long countNotDeleted() {
         return tagMapper.countByExample(new TagExample());
     }

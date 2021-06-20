@@ -24,6 +24,9 @@ public class TagService {
     @Resource
     private BlogTagRepository blogTagRepository;
 
+    /**
+     * 分页查询标签
+     */
     public PageDTO<TagDTO> listTag(Pageable pageable) {
         List<TagDO> tagDOS = tagRepository.listTag(pageable);
         List<TagDTO> tagDTOS = ConvertUtils.convertList(tagDOS, TagDTO.class);
@@ -31,6 +34,14 @@ public class TagService {
         PageDTO<TagDTO> pageDTO = new PageDTO<>(pageable, total);
         pageDTO.setPageData(tagDTOS);
         return pageDTO;
+    }
+
+    /**
+     * 查询存在的标签
+     */
+    public List<TagDTO> listTag() {
+        List<TagDO> tagDOS = tagRepository.listTag();
+        return ConvertUtils.convertList(tagDOS, TagDTO.class);
     }
 
     public Long insertTag(TagDTO tagDTO) {

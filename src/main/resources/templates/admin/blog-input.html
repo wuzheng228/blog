@@ -46,7 +46,7 @@
         </div>
     </div>
     <!--内容-->
-    <div class="m-container m-padded-tb-big">
+    <div class="m-container m-padded-tb-big m-main-middle">
        <div class="ui container">
            <form th:object="${blog}" id="blog-form" action="#" th:action="@{/admin/blog/upsert}" method="post" class="ui form">
                <input type="hidden" name="realeased">
@@ -92,12 +92,17 @@
                        <div class="ui left labeled input">
                            <label class="ui compact teal basic label">标签</label>
                            <div class="ui multiple search selection fluid dropdown">
-                               <input type="hidden" name="tagsIds">
+                               <input type="hidden" name="tagsIds" th:value="${tagsIds}" >
                                <i class="dropdown icon"></i>
-                               <div class="text">标签</div>
+                               <div class="text" th:if="${selectedTags == null}">标签</div>
+                               <a th:each="tag : ${selectedTags}" th:data-value="${tag.id}" style="display: inline-block !important;" class="ui label transition visible">
+                                   <span th:text="${tag.name}"></span><i class="delete icon"></i></a>
                                <div class="ui menu">
-                                   <div class="ui item" data-value="1">错误日志</div>
+                                   <div th:each="tag : ${tagDTOS}" class="ui item" th:text="${tag.name}" th:data-value="${tag.id}" data-value="1">错误日志</div>
+                                   <!--/*-->
+                                   <div class="ui item active filtered" data-value="1">123312</div>
                                    <div class="ui item" data-value="2">开发者手册</div>
+                                   <!--*/-->
                                </div>
                            </div>
                        </div>
@@ -112,7 +117,7 @@
                <div class="inline fields">
                    <div class="field">
                        <div class="ui checkbox">
-                           <input type="checkbox" name="recommend" class="hidden" th:checked="${blog.recommend}" id="recommend">
+                           <input type="checkbox" name="recommend" class="hidden"  th:checked="${blog.recommend}" id="recommend">
                            <label for="recommend">推荐</label>
                        </div>
                    </div>

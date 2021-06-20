@@ -4,112 +4,35 @@ import com.zzspace.blog.common.anno.DateFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by 76973 on 2021/6/6 8:31
  */
 public class BlogDTO implements Serializable {
-    /**
-     * id (19)必填<br>
-     *博客id
-     */
     private Long id;
-
-    /**
-     * title (32)必填<br>
-     *标题
-     */
     private String title;
-
     private Integer typeId;
-
     private TypeDTO type;
-
-    /**
-     * user_id (10)必填<br>
-     *用户
-     */
+    private String tagsIds;
     private Integer userId;
-
     private String username;
-
-    /**
-     * content (255)<br>
-     *内容
-     */
     private String content;
-
-    /**
-     * first_picture (255)<br>
-     *首图
-     */
     private String firstPicture;
-
-    /**
-     * flag (10)<br>
-     *标记:原创、转载、翻译
-     */
     private String flag;
-
-    /**
-     * view (10)<br>
-     *阅读量
-     */
     private Integer view;
-
-    /**
-     * appreciation_on (1)默认值 [b'1']<br>
-     *赞赏是否开启
-     */
     private boolean appreciationOn;
-
-    /**
-     * copyright_on (1)默认值 [b'1']<br>
-     *版权是否开启
-     */
     private boolean copyrightOn;
-
-    /**
-     * recommend (1)默认值 [b'1']<br>
-     *是否推荐
-     */
     private boolean recommend;
-
-    /**
-     * comment_on (1)默认值 [b'1']<br>
-     *评论是否开启
-     */
     private boolean commentOn;
-
-    /**
-     * realeased (1)<br>
-     *是否发布
-     */
     private boolean realeased;
-
-    /**
-     * is_deleted (1)必填<br>
-     *是否逻辑删除
-     */
     private boolean isDeleted;
-
-    /**
-     * gmt_created (19)<br>
-     *创建时间
-     */
     @DateFormat
     private String gmtCreated;
-
-    /**
-     * gmt_modified (19)<br>
-     *更新时间
-     */
     @DateFormat
     private String gmtModified;
 
-    public BlogDTO() {
-//        this.type = new TypeDTO();
-    }
+    public BlogDTO() {}
 
     public Long getId() {
         return id;
@@ -141,6 +64,14 @@ public class BlogDTO implements Serializable {
 
     public void setType(TypeDTO type) {
         this.type = type;
+    }
+
+    public String getTagsIds() {
+        return tagsIds;
+    }
+
+    public void setTagsIds(String tagsIds) {
+        this.tagsIds = tagsIds;
     }
 
     public Integer getUserId() {

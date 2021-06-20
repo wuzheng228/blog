@@ -9,10 +9,9 @@ import java.io.Serializable;
 public class TagDTO implements Serializable {
 
     private Long id;
-
-
     @NotBlank(message = "标签名不能为空")
     private String name;
+    private String ids;
 
     public Long getId() {
         return id;

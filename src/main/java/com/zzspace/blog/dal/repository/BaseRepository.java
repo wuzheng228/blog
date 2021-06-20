@@ -33,4 +33,8 @@ public abstract class BaseRepository<D> {
         }
         return null;
     }
+
+    public D selectByPrimaryKey (Long id) {
+        return mapper.selectByPrimaryKey(id);
+    }
 }

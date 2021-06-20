@@ -1,6 +1,10 @@
 /*------body-------*/
 body {
-    background: url("../images/bg2.png");
+    background: url("../images/bg2.png") !important;
+    /*min-height: 100% !important;*/
+    /*position:relative!important;*/
+    /*margin:0;*/
+    /*padding:0;*/
 }
 
 .m-padding-mini {
@@ -110,6 +114,16 @@ body {
 .m-right-bottom {
     bottom: 0 !important;
     right: 0!important;
+}
+.m-main-middle {
+    min-height: 100% !important;
+}
+.m-footer-bottom {
+    width: 100%;
+    position:fixed!important;
+    /*height: 328px!important;*/
+    bottom:0!important;
+    left: 0!important;
 }
 /*display*/
 .m-inline-block {

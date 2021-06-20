@@ -15,7 +15,7 @@ import java.util.List;
  * Created by 76973 on 2021/6/6 8:30
  */
 @Repository
-public class BlogRepository {
+public class BlogRepository extends BaseRepository<BlogDO> {
     @Resource
     private BlogMapper blogMapper;
 

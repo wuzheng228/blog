@@ -46,11 +46,10 @@
         </div>
     </div>
     <!--内容-->
-    <div class="m-container-small m-padded-tb-big">
+    <div class="m-container-small m-padded-tb-big m-main-middle">
        <div class="ui container">
            <form action="#" method="post" class="ui form" th:action="${tag} == null ? @{/admin/tag/insert} : @{/admin/tag/update(pageNo=${pageNo})}" >
                <div class= " field">
-
                    <div class="ui left labeled input">
                        <input type="hidden" name="id" th:value="${tag} != null ? ${tag.id} : null">
                        <label class="ui teal basic label">名称</label>

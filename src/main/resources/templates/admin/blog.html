@@ -45,7 +45,7 @@
         </div>
     </div>
     <!--内容-->
-    <div class="m-container-small m-padded-tb-big">
+    <div class="m-container-small m-padded-tb-big m-main-middle">
        <div class="ui container">
            <div class="ui mini success message close" th:unless="${#strings.isEmpty(message)}">
                <i class="close icon"></i>
@@ -97,10 +97,10 @@
                        <tbody>
                            <tr th:each="blog,iterStat: ${page.getPageData()}">
                                <td th:text="${iterStat.count}">1</td>
-                               <td th:text="${blog.getTitle()}">可以练习清单</td>
-                               <td th:text="${blog.getType().getName()}">认知升级</td>
-                               <td th:text="${blog.getAppreciationOn()?'是':'否'}">是</td>
-                               <td th:text="${blog.getGmtModified()}">2021-05-08 09:19</td>
+                               <td th:text="${blog.title}">可以练习清单</td>
+                               <td th:text="${blog.type.name}">认知升级</td>
+                               <td th:text="${blog.recommend?'是':'否'}">是</td>
+                               <td th:text="${blog.gmtModified}">2021-05-08 09:19</td>
                                <td>
                                    <a href="#" th:href="@{/admin/blog/input(id=${blog.getId()})}" class="ui mini teal button">编辑</a>
                                    <a href="#" th:href="@{/admin/blog/delete(id=${blog.getId()})}" class="ui mini red button">删除</a>
@@ -114,7 +114,7 @@
                                    <a onclick="page(this)" th:attr="data-page=${page.getPrevPage()}"  class="icon item">
                                        <i class="left chevron icon"></i>
                                    </a>
-                                   <a th:each="pageNum: ${#numbers.sequence(page.startNav, page.endNav)}" th:text="${pageNum}" th:classappend="${pageNum==page.curpage?'active':''}" class="item">1</a>
+                                   <a th:href="@{/admin/blog(pageNo = ${pageNum})}" th:each="pageNum: ${#numbers.sequence(page.startNav, page.endNav)}" th:text="${pageNum}" th:classappend="${pageNum==page.curpage?'active':''}" class="item">1</a>
                                    <!--/*-->
                                    <a class="item">2</a>
                                    <a class="item">3</a>

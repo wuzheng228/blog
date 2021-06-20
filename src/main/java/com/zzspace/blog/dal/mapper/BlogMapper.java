@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface BlogMapper {
+public interface BlogMapper extends BaseMapper<BlogDO> {
     long countByExample(BlogExample example);
 
     int deleteByExample(BlogExample example);

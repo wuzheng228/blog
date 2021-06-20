@@ -143,25 +143,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zzspace.blog.dal.domain.BlogDO">
-    insert into tb_blog (id, title, type_id, 
-      user_id, first_picture, flag, 
-      `view`, appreciation_on, copyright_on, 
-      recommend, comment_on, realeased, 
-      is_deleted, gmt_created, gmt_modified, 
-      content)
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
-      #{userId,jdbcType=INTEGER}, #{firstPicture,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, 
-      #{view,jdbcType=INTEGER}, #{appreciationOn,jdbcType=BIT}, #{copyrightOn,jdbcType=BIT}, 
-      #{recommend,jdbcType=BIT}, #{commentOn,jdbcType=BIT}, #{realeased,jdbcType=BIT}, 
-      #{isDeleted,jdbcType=BIT}, sysdate(), sysdate(), 
-      #{content,jdbcType=LONGVARCHAR})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_blog (title, type_id, user_id, 
+      first_picture, flag, `view`, 
+      appreciation_on, copyright_on, recommend, 
+      comment_on, realeased, is_deleted, 
+      gmt_created, gmt_modified, content
+      )
+    values (#{title,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{firstPicture,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{view,jdbcType=INTEGER}, 
+      #{appreciationOn,jdbcType=BIT}, #{copyrightOn,jdbcType=BIT}, #{recommend,jdbcType=BIT}, 
+      #{commentOn,jdbcType=BIT}, #{realeased,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, 
+      sysdate(), sysdate(), #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zzspace.blog.dal.domain.BlogDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into tb_blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="title != null">
         title,
       </if>
@@ -209,9 +212,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
@@ -452,22 +452,22 @@
       gmt_modified = sysdate()
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <insert id="batchInsert" parameterType="map">
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     insert into tb_blog
-    (id, title, type_id, user_id, first_picture, flag, `view`, appreciation_on, copyright_on, 
+    (title, type_id, user_id, first_picture, flag, `view`, appreciation_on, copyright_on, 
       recommend, comment_on, realeased, is_deleted, gmt_created, gmt_modified, content
       )
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.typeId,jdbcType=INTEGER}, 
-        #{item.userId,jdbcType=INTEGER}, #{item.firstPicture,jdbcType=VARCHAR}, #{item.flag,jdbcType=VARCHAR}, 
-        #{item.view,jdbcType=INTEGER}, #{item.appreciationOn,jdbcType=BIT}, #{item.copyrightOn,jdbcType=BIT}, 
-        #{item.recommend,jdbcType=BIT}, #{item.commentOn,jdbcType=BIT}, #{item.realeased,jdbcType=BIT}, 
-        #{item.isDeleted,jdbcType=BIT}, #{item.gmtCreated,jdbcType=TIMESTAMP}, #{item.gmtModified,jdbcType=TIMESTAMP}, 
+      (#{item.title,jdbcType=VARCHAR}, #{item.typeId,jdbcType=INTEGER}, #{item.userId,jdbcType=INTEGER}, 
+        #{item.firstPicture,jdbcType=VARCHAR}, #{item.flag,jdbcType=VARCHAR}, #{item.view,jdbcType=INTEGER}, 
+        #{item.appreciationOn,jdbcType=BIT}, #{item.copyrightOn,jdbcType=BIT}, #{item.recommend,jdbcType=BIT}, 
+        #{item.commentOn,jdbcType=BIT}, #{item.realeased,jdbcType=BIT}, #{item.isDeleted,jdbcType=BIT}, 
+        #{item.gmtCreated,jdbcType=TIMESTAMP}, #{item.gmtModified,jdbcType=TIMESTAMP}, 
         #{item.content,jdbcType=LONGVARCHAR})
     </foreach>
   </insert>
-  <insert id="batchInsertSelective" parameterType="map">
+  <insert id="batchInsertSelective" keyColumn="id" keyProperty="list.id" parameterType="map" useGeneratedKeys="true">
     insert into tb_blog (
     <foreach collection="selective" item="column" separator=",">
       ${column.escapedColumnName}
@@ -477,9 +477,6 @@
     <foreach collection="list" item="item" separator=",">
       (
       <foreach collection="selective" item="column" separator=",">
-        <if test="'id'.toString() == column.value">
-          #{item.id,jdbcType=BIGINT}
-        </if>
         <if test="'title'.toString() == column.value">
           #{item.title,jdbcType=VARCHAR}
         </if>

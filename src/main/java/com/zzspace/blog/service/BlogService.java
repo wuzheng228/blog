@@ -3,24 +3,25 @@ package com.zzspace.blog.service;
 import com.zzspace.blog.common.strategy.impl.DateFormaters;
 import com.zzspace.blog.common.util.ConvertUtils;
 import com.zzspace.blog.common.util.MarkdownUtils;
-import com.zzspace.blog.dal.domain.BlogDO;
-import com.zzspace.blog.dal.domain.TypeDO;
-import com.zzspace.blog.dal.domain.UserDO;
-import com.zzspace.blog.dal.repository.BlogRepository;
-import com.zzspace.blog.dal.repository.TypeRepository;
-import com.zzspace.blog.dal.repository.UserRepository;
+import com.zzspace.blog.dal.domain.*;
+import com.zzspace.blog.dal.repository.*;
 import com.zzspace.blog.model.dto.BlogDTO;
 import com.zzspace.blog.model.dto.PageDTO;
+import com.zzspace.blog.model.dto.TagDTO;
 import com.zzspace.blog.model.dto.TypeDTO;
-import com.zzspace.blog.model.query.Pageable;
 import com.zzspace.blog.model.query.BlogQuery;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import com.zzspace.blog.model.query.Pageable;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by 76973 on 2021/6/6 8:29
@@ -34,7 +35,10 @@ public class BlogService {
     private BlogRepository blogRepository;
     @Resource
     private UserRepository userRepository;
-
+    @Resource
+    private BlogTagRepository blogTagRepository;
+    @Resource
+    private TagRepository tagRepository;
     /**
      * 分页查询博客信息
      */
@@ -52,6 +56,21 @@ public class BlogService {
         }
         pageDTO.setPageData(blogDTOS);
         return pageDTO;
+    }
+
+    /**
+     * 查找该博客含有的标签
+     */
+    public List<TagDTO> listTagByBlogId(Long id) {
+        List<BlogTagDO> blogTagDOS = blogTagRepository.selectByBlogId(id);
+        if (CollectionUtils.isNotEmpty(blogTagDOS)) {
+            return blogTagDOS.stream().map(o -> {
+                Long tagId = o.getTagId();
+                TagDO tagDO = tagRepository.selectByPrimaryKey(tagId);
+                return ConvertUtils.convert(tagDO, TagDTO.class);
+            }).collect(Collectors.toList());
+        }
+        return null;
     }
 
     /**
@@ -74,13 +93,40 @@ public class BlogService {
     /**
      * 更新保存博客内容
      */
+    @Transactional
     public int upsertBlog(BlogDTO blogDTO) {
         BlogDO blog = ConvertUtils.convert(blogDTO, BlogDO.class);
-        Long id = blog.getId();
-        if (id != null) {
+        Long blogId = blog.getId();
+        if (blogId != null) {
+            List<BlogTagDO> blogTagDOS =  blogTagRepository.selectByBlogId(blogId);
+            List<Long> originalTagIds = blogTagDOS.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
+            String tagsIds = blogDTO.getTagsIds();
+            List<Long> updatedTagIds = new ArrayList<>();
+            if (StringUtils.isNotBlank(tagsIds)) {
+                updatedTagIds = Arrays.stream(tagsIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
+            }
+            Collection<Long> needToDeletes = CollectionUtils.removeAll(originalTagIds, updatedTagIds);
+            Collection<Long> needToInserts = CollectionUtils.removeAll(updatedTagIds, originalTagIds);
+            for (Long each : needToDeletes) {
+                blogTagRepository.deleteByTagId(each);
+            }
+            for (Long each : needToInserts) {
+                BlogTagDO blogTagDO = new BlogTagDO();
+                blogTagDO.setBlogId(blog.getId());
+                blogTagDO.setTagId(each);
+                blogTagRepository.save(blogTagDO);
+            }
             return blogRepository.updateBlogById(blog);
         }
-        return blogRepository.insertBlog(blog);
+        int num = blogRepository.insertBlog(blog);
+        Long[] tagsIds = Arrays.stream( blogDTO.getTagsIds().split(",")).map(Long::parseLong).toArray(Long[]::new);
+        for (Long tagId : tagsIds) {
+            BlogTagDO blogTagDO = new BlogTagDO();
+            blogTagDO.setBlogId(blog.getId());
+            blogTagDO.setTagId(tagId);
+            blogTagRepository.save(blogTagDO);
+        }
+        return num;
     }
 
     /**
