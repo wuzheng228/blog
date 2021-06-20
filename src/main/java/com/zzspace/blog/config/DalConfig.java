@@ -24,7 +24,7 @@ import java.sql.DriverManager;
  */
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
-@MapperScan(annotationClass = Mapper.class, basePackages = {"com.zzspace.blog.dal.mapper"})
+@MapperScan(annotationClass = Mapper.class, basePackages = {"com.zzspace.blog.dal.mapper", "com.zzspace.blog.dao"})
 public class DalConfig {
 
     @Bean

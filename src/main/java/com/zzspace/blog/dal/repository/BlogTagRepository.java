@@ -23,10 +23,22 @@ public class BlogTagRepository extends BaseRepository<BlogTagDO> {
         return blogTagMapper.deleteByExample(blogTagExample);
     }
 
+    public Integer deleteBybBlogId(Long id) {
+        BlogTagExample blogTagExample = new BlogTagExample();
+        blogTagExample.createCriteria().andBlogIdEqualTo(id);
+        return blogTagMapper.deleteByExample(blogTagExample);
+    }
+
     public List<BlogTagDO> selectByBlogId(Long id) {
         BlogTagExample blogTagExample = new BlogTagExample();
         blogTagExample.createCriteria().andBlogIdEqualTo(id);
         return blogTagMapper.selectByExample(blogTagExample);
+    }
+
+    public Long coutByTagId(Long id) {
+        BlogTagExample e = new BlogTagExample();
+        e.createCriteria().andTagIdEqualTo(id);
+        return blogTagMapper.countByExample(e);
     }
 
 }

@@ -70,13 +70,16 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public List<TypeDTO> findTopKType(int k) {
+    public List<TypeDTO> findTopKType(Integer k) {
         List<TypeDO> typeDOS = typeRepository.listType();
         List<TypeDTO> typeDTOS = ConvertUtils.convertList(typeDOS, TypeDTO.class);
         typeDTOS.forEach(typeDTO -> {
             long num = blogRepository.countBlogByTypeId(typeDTO.getId());
             typeDTO.setBlogNum(num);
         });
-        return Sorters.TOPK_PRIORITI_QUEUE.topK(typeDTOS, k, Sorter.DESC);
+        if (k != null) {
+            return Sorters.TOPK_PRIORITI_QUEUE.topK(typeDTOS, k, Sorter.DESC);
+        }
+        return Sorters.TOPK_PRIORITI_QUEUE.topK(typeDTOS, typeDTOS.size(), Sorter.DESC);
     }
 }

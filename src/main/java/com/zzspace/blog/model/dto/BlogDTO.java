@@ -15,6 +15,7 @@ public class BlogDTO implements Serializable {
     private Integer typeId;
     private TypeDTO type;
     private String tagsIds;
+    private List<String> tagNames;
     private Integer userId;
     private String username;
     private String content;
@@ -72,6 +73,14 @@ public class BlogDTO implements Serializable {
 
     public void setTagsIds(String tagsIds) {
         this.tagsIds = tagsIds;
+    }
+
+    public List<String> getTagNames() {
+        return tagNames;
+    }
+
+    public void setTagNames(List<String> tagNames) {
+        this.tagNames = tagNames;
     }
 
     public Integer getUserId() {

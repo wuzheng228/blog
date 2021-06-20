@@ -9,6 +9,7 @@ public class BlogQuery extends Pageable implements Serializable {
 
     private String title;
     private Integer typeId;
+    private Long tagId;
     private boolean recommend;
 
     public String getTitle() {
@@ -35,4 +36,15 @@ public class BlogQuery extends Pageable implements Serializable {
         this.recommend = recommend;
     }
 
+    public Long getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Long tagId) {
+        this.tagId = tagId;
+    }
+
+    public boolean isRecommend() {
+        return recommend;
+    }
 }

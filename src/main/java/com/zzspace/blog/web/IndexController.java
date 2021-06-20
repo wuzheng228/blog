@@ -2,12 +2,11 @@ package com.zzspace.blog.web;
 
 
 import com.zzspace.blog.config.properties.BizProperties;
-import com.zzspace.blog.model.dto.BlogDTO;
-import com.zzspace.blog.model.dto.PageDTO;
-import com.zzspace.blog.model.dto.TypeDTO;
-import com.zzspace.blog.model.dto.UserDTO;
+import com.zzspace.blog.model.dto.*;
+import com.zzspace.blog.model.query.BlogQuery;
 import com.zzspace.blog.model.query.Pageable;
 import com.zzspace.blog.service.BlogService;
+import com.zzspace.blog.service.TagService;
 import com.zzspace.blog.service.TypeService;
 import com.zzspace.blog.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -30,15 +29,19 @@ public class IndexController {
     private TypeService typeService;
     @Resource
     private UserService userService;
+    @Resource
+    private TagService tagService;
 
     @GetMapping("/")
     public String index(Pageable pageable, Model model) {
         PageDTO<BlogDTO> indexInfo = blogService.queryIndexInfo(pageable);
         List<TypeDTO> topKType = typeService.findTopKType(bizProperties.getTopk());
         List<BlogDTO> topKBlog = blogService.findTopKRecommend(bizProperties.getTopk());
+        List<TagDTO> topKTag = tagService.findTopKTags(bizProperties.getTopk());
         model.addAttribute("indexInfo",indexInfo);
         model.addAttribute("types", topKType);
         model.addAttribute("topKBlog",topKBlog);
+        model.addAttribute("topKTag", topKTag);
         return "index";
     }
 
@@ -56,6 +59,26 @@ public class IndexController {
         model.addAttribute("content", blogById);
         model.addAttribute("user", userById);
         return "blog";
+    }
+
+    @GetMapping("/index/type")
+    public String showTypes(BlogQuery blogQuery, Model model) {
+        List<TypeDTO> types = typeService.findTopKType(null);
+        PageDTO<BlogDTO> page = blogService.listBlog(blogQuery);
+        model.addAttribute("selectedType", blogQuery.getTypeId());
+        model.addAttribute("types", types);
+        model.addAttribute("page", page);
+        return "types";
+    }
+
+    @GetMapping("/index/tag")
+    public String showTags(BlogQuery blogQuery, Model model) {
+        List<TagDTO> tags = tagService.findTopKTags(null);
+        PageDTO<BlogDTO> page = blogService.listBlog(blogQuery);
+        model.addAttribute("selectedTag", blogQuery.getTagId());
+        model.addAttribute("tags", tags);
+        model.addAttribute("page", page);
+        return "tags";
     }
 
 }

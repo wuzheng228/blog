@@ -25,5 +25,5 @@ public interface TypeService {
 
     int deleteById(int id);
 
-    List<TypeDTO> findTopKType(int k);
+    List<TypeDTO> findTopKType(Integer k);
 }

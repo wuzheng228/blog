@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class BlogService {
-
     @Resource
     private TypeRepository repository;
     @Resource
@@ -45,14 +44,32 @@ public class BlogService {
     public PageDTO<BlogDTO> listBlog(BlogQuery blogQuery) {
         Long total = blogRepository.countBlogNotDeleted();
         List<BlogDO> blogDOS = blogRepository.listBlog(blogQuery);
+        if (blogQuery.getTagId() != null) {
+            List<BlogDO> res = new ArrayList<>();
+           blogDOS.forEach(o -> {
+                List<BlogTagDO> blogTagDOS = blogTagRepository.selectByBlogId(o.getId());
+                List<Long> tagIds = blogTagDOS.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
+                if (tagIds.contains(blogQuery.getTagId())) {
+                    res.add(o);
+                }
+            });
+           blogDOS = res;
+        }
         List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class);
         PageDTO<BlogDTO> pageDTO = new PageDTO<>(blogQuery, total);
         for (int i = 0; i < blogDOS.size(); i++) {
-            BlogDO each = blogDOS.get(i);
+            BlogDTO each = blogDTOS.get(i);
             TypeDO typeDO = repository.findTypeById(each.getTypeId());
             blogDTOS.get(i).setType(ConvertUtils.convert(typeDO, TypeDTO.class));
             UserDO user = userRepository.findUserById(each.getUserId());
             blogDTOS.get(i).setUsername(user.getUsername());
+            List<BlogTagDO> blogTagDOS = blogTagRepository.selectByBlogId(each.getId());
+            List<String> tagNames = new ArrayList<>();
+            for (BlogTagDO blogTagDO : blogTagDOS) {
+                TagDO tagDO = tagRepository.selectByPrimaryKey(blogTagDO.getTagId());
+                tagNames.add(tagDO.getName());
+            }
+            each.setTagNames(tagNames);
         }
         pageDTO.setPageData(blogDTOS);
         return pageDTO;
@@ -132,7 +149,9 @@ public class BlogService {
     /**
      * 根据id删除博客
      */
+    @Transactional
     public int deleteBlogById(long id) {
+        blogTagRepository.deleteBybBlogId(id);
         return  blogRepository.deleteBlogById(id);
     }
 
