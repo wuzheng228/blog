@@ -151,7 +151,7 @@
             </div>
             <!--分页-->
             <div class="ui bottom attached segment">
-                <div class="ui middle aligned two column grid">
+                <div th:if="${page.pageCount > 1}" class="ui middle aligned two column grid">
                     <div class="column">
                         <a href="" class="ui mini teal basic button">上一页</a>
                     </div>
