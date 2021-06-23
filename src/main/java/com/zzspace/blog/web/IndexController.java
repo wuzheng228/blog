@@ -75,6 +75,7 @@ public class IndexController {
     public String showTags(BlogQuery blogQuery, Model model) {
         List<TagDTO> tags = tagService.findTopKTags(null);
         PageDTO<BlogDTO> page = blogService.listBlog(blogQuery);
+        System.out.println(page.getPageCount());
         model.addAttribute("selectedTag", blogQuery.getTagId());
         model.addAttribute("tags", tags);
         model.addAttribute("page", page);
