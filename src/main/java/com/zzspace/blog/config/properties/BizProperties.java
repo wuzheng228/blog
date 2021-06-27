@@ -13,6 +13,10 @@ public class BizProperties {
 
     @Value("${zzspace.blog.topk}")
     private int topk;
+    @Value("${zzspace.blog.avatar.tourist}")
+    private String touristAvatar;
+    @Value("${zzspace.blog.avatar.admin}")
+    private String adminAvatar;
 
     public int getTopk() {
         return topk;
@@ -20,5 +24,21 @@ public class BizProperties {
 
     public void setTopk(int topk) {
         this.topk = topk;
+    }
+
+    public String getTouristAvatar() {
+        return touristAvatar;
+    }
+
+    public void setTouristAvatar(String touristAvatar) {
+        this.touristAvatar = touristAvatar;
+    }
+
+    public String getAdminAvatar() {
+        return adminAvatar;
+    }
+
+    public void setAdminAvatar(String adminAvatar) {
+        this.adminAvatar = adminAvatar;
     }
 }

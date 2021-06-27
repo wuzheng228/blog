@@ -54,8 +54,11 @@ public class IndexController {
 
     @GetMapping("/index/show/{id}")
     public String showBlog(@PathVariable("id") Long id, Model model) {
+        blogService.incrViewByBlogId(id);
         BlogDTO blogById = blogService.findBlogById(id, true);
         UserDTO userById = userService.findUserById(blogById.getUserId());
+        List<TagDTO> tagDTOS = blogService.listTagByBlogId(id);
+        model.addAttribute("tags", tagDTOS);
         model.addAttribute("content", blogById);
         model.addAttribute("user", userById);
         return "blog";

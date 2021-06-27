@@ -207,4 +207,12 @@ public class BlogService {
         return pageDTO;
     }
 
+    /**
+     * 阅读量加1
+     */
+    public Integer incrViewByBlogId(Long id) {
+        BlogDO blogDO = blogRepository.selectByPrimaryKey(id);
+        blogDO.setView(blogDO.getView() + 1);
+        return blogRepository.updateBlogById(blogDO);
+    }
 }

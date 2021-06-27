@@ -11,6 +11,7 @@ public class TagDTO implements Serializable, Comparable<TagDTO>{
     private Long id;
     @NotBlank(message = "标签名不能为空")
     private String name;
+    // 这篇博客已经选择了的标签
     private String ids;
     private Long total;
 
