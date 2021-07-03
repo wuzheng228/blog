@@ -11,3 +11,6 @@ zzspace.blog:
   avatar:
       tourist: /images/tourist.png
       admin: /images/admin.jpg
+  imagePath: D://upload/image/
+  filePath: D://upload/files/
+  rootFilePath: D://upload/

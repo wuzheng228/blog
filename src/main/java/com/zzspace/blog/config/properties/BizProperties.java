@@ -17,6 +17,12 @@ public class BizProperties {
     private String touristAvatar;
     @Value("${zzspace.blog.avatar.admin}")
     private String adminAvatar;
+    @Value("${zzspace.blog.imagePath}")
+    private String imagePath;
+    @Value("${zzspace.blog.filePath}")
+    private String filePath;
+    @Value("${zzspace.blog.rootFilePath}")
+    private String rootFilePath;
 
     public int getTopk() {
         return topk;
@@ -40,5 +46,29 @@ public class BizProperties {
 
     public void setAdminAvatar(String adminAvatar) {
         this.adminAvatar = adminAvatar;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getRootFilePath() {
+        return rootFilePath;
+    }
+
+    public void setRootFilePath(String rootFilePath) {
+        this.rootFilePath = rootFilePath;
     }
 }

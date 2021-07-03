@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <!--移动端预览设置-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <title>管理后台</title>
+</head>
+<body>
+    <!--导航-->
+    <nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">Warms</h2>
+                <a class="m-item item m-mobile-hide" href="#"><i class="home icon"></i>博客</a>
+                <a class="m-item item m-mobile-hide" href="#"><i class="idea icon"></i>分类</a>
+                <a class="m-item item m-mobile-hide" href="#"><i class="tags icon"></i>标签</a>
+                <a class="m-item item m-mobile-hide" href="#"> <i class="file icon"></i>文件</a>
+                <div class="right menu m-item m-mobile-hide">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://dummyimage.com/100x100/000/fff" alt="" class="ui avatar image">
+                            Warms
+                            <i class="dropdown icon"></i>
+                        </div>
+                        <div class="menu">
+                            <a href="#" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a  class="ui menu toggle black icon button m-top-right m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+    <!--内容-->
+    <div class="m-container m-padded-tb-big m-main-middle">
+        <div class="ui success message">
+            <i class="close icon"></i>
+            <div class="header">提示:</div>
+            <p>上传成功!</p>
+        </div>
+        <div  class="ui container">
+            <div class="ui segments">
+                <div class="ui segment">
+                    <div class="ui  progress success" id="progress-bar">
+                        <div class="bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="four column row">
+                            <div class="column">
+                                <div class="ui centered two column grid">
+                                    <div class="column">
+                                        <input id="upload" type="file" name="files" th:data-url="@{/admin/disk/upload}" data-url="/multifile" multiple style="display: none">
+                                        <div class="ui inverted teal compact menu">
+                                            <div class="ui simple dropdown item">
+                                                上传
+                                                <i class="dropdown icon"></i>
+                                                <div class="menu">
+                                                    <div id="btn-upload" class="item">文件</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="ui compact menu">
+                                            <div class="ui simple dropdown item">
+                                                新建
+                                                <i class="dropdown icon"></i>
+                                                <div class="menu">
+                                                    <div id="btn-mkdir" class="item">文件夹</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="filelist" th:fragment="list">
+                    <div  class="ui attached segment">
+                        <div class="ui grid">
+                            <div class="two column row">
+                                <div class="left floated column">
+                                    <div  class="ui breadcrumb">
+                                        <a class="section">Home</a>
+                                        <div class="divider"> / </div>
+                                        <a class="section">Store</a>
+                                        <div class="divider"> / </div>
+                                        <div class="active section">T-Shirt</div>
+                                    </div>
+                                </div>
+                                <div class="ui right aligned right floated column">
+                                    已全部加载共68个
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui attached segment" style="padding: 0">
+                        <table class="ui celled table">
+                            <thead>
+                                <tr>
+                                    <th>文件名</th>
+                                    <th>类型</th>
+                                    <th>修改时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="row : ${files}">
+                                <td th:classappend="${row.dir? 'folder':''}" th:data-parentid="${row.id}" class="collapsing">
+                                    <i th:unless="${row.dir}" class="file icon"></i>
+                                    <i th:if="${row.dir}" class="folder icon"></i>
+                                    <span th:text="${row.name}">node_modules</span>
+                                </td>
+                                <td>
+                                    <div class="ui two column grid">
+                                        <div class="four column row">
+                                            <div th:text="${row.type}" class="left floated column">
+                                                Initial commit
+                                            </div>
+                                            <div th:unless="${row.dir}" class="right floated column">
+                                                <div class="ui dropdown">
+                                                    <i class="dropdown icon"></i>
+                                                    <div class="menu">
+                                                        <div class="item">移动</div>
+                                                        <div class="item">复制</div>
+                                                        <div class="item">删除</div>
+                                                        <div class="item">下载</div>
+                                                        <div class="item">重命名</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td th:text="${row.gmtModified}" class="right aligned collapsing">10 hours ago</td>
+                            </tr>
+                            <!--/*-->
+                            <tr >
+                                <td>
+                                    <i class="folder icon"></i> test
+                                </td>
+                                <td>Initial commit</td>
+                                <td class="right aligned">10 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="folder icon"></i> build
+                                </td>
+                                <td>Initial commit</td>
+                                <td class="right aligned">10 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="file outline icon"></i> package.json
+                                </td>
+                                <td>Initial commit</td>
+                                <td class="right aligned">10 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="file outline icon"></i> Gruntfile.js
+                                </td>
+                                <td>Initial commit</td>
+                                <td class="right aligned">10 hours ago</td>
+                            </tr>
+                            <!--*/-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui mini modal">
+            <div class="header">请输入文件夹名称</div>
+            <div class="content">
+                <form th:action="@{/admin/disk/mkdirs}" class="ui form" method="post">
+                    <input type="hidden" name="parentId" value="-1" >
+                    <div class="field">
+                        <input type="text" name="name" placeholder="文件名">
+                    </div>
+                    <div class="ui right aligned container">
+                        <button class="ui  teal button" type="submit">新建</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--底部-->
+    <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">用户故事(User story)</a>
+                        <a href="#" class="item">用户故事(User story)</a>
+                        <a href="#" class="item">用户故事(User story)</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">联系我</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">用户故事(User story)</a>
+                        <a href="#" class="item">用户故事(User story)</a>
+                        <a href="#" class="item">用户故事(User story)</a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header">Warms</h4>
+                    <p class="m-text-thin m-text-space m-opacity-mini">这是我的个人博客会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="m-text-thin m-text-space m-opacity-tiny">CopyRight@2021-2019 warms</p>
+        </div>
+    </footer>
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script th:src="@{/lib/upload/jquery.ui.widget.js}" src=  "../../static/lib/upload/jquery.ui.widget.js" ></script>
+<script th:src="@{/lib/upload/jquery.iframe-transport.js}" src="../../static/lib/upload/jquery.iframe-transport.js" ></script>
+<script th:src="@{/lib/upload/jquery.fileupload.js}" src="../../static/lib/upload/jquery.fileupload.js" ></script>
+<script th:src="@{/lib/editormd/editormd.amd.min.js}" src="../../static/lib/editormd/editormd.amd.min.js" ></script>
+<!--/*/</th:block>/*/-->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+    $('#btn-mkdir').click(function () {
+        $('.mini.modal')
+            .modal('show')
+        ;
+    });
+    $('.folder').click(function (obj) {
+        var parentid = $(this).data('parentid');
+        console.log(parentid)
+        $("[name='parentId']").val(parentid);
+        $.ajaxSetup ({
+            cache: false
+        });
+        $('#filelist').load(/*[[@{/admin/disk/listAllFile}]]*/"/admin/disk/listAllFile",{
+            "parentId": parentid
+        });
+    });
+    $(function () {
+        $('#upload').fileupload({
+            dataType: 'json',
+            // add: function (e, data) {
+            //     data.submit();
+            // },
+            done: function (e, data) {
+
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                // $('#progress .bar').css(
+                //     'width',
+                //     progress + '%'
+                // );
+                $('#progress-bar').progress({
+                    percent: progress
+                });
+            }
+        });
+    });
+    $("#btn-upload").click(function () {
+        $("#upload").click();
+    })
+</script>
+</body>
+</html>
