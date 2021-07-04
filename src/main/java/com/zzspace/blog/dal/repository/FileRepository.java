@@ -6,6 +6,7 @@ import com.zzspace.blog.dal.mapper.FileMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -30,5 +31,27 @@ public class FileRepository extends BaseRepository<FileDO> {
             criteria.andParentIdEqualTo(parentId);
         }
         return fetchOne(fileMapper.selectByExample(example));
+    }
+
+    public List<FileDO> ListByParentId(Long parentId) {
+        FileExample example = new FileExample();
+        example.createCriteria().andParentIdEqualTo(parentId);
+        return fileMapper.selectByExample(example);
+    }
+
+    public void deleteById(Long id) {
+        fileMapper.deleteByPrimaryKey(id);
+    }
+
+    public void deleteByParentId(Long id) {
+        FileExample example = new FileExample();
+        example.createCriteria().andParentIdEqualTo(id);
+        fileMapper.deleteByExample(example);
+    }
+
+    public Long countFilesByParentId(Long id) {
+        FileExample example = new FileExample();
+        example.createCriteria().andParentIdEqualTo(id).andDirEqualTo(false);
+        return fileMapper.countByExample(example);
     }
 }

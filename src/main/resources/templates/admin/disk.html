@@ -38,15 +38,20 @@
     </nav>
     <!--内容-->
     <div class="m-container m-padded-tb-big m-main-middle">
-        <div class="ui success message">
+        <div th:unless="${#strings.isEmpty(message)}" class="ui success message" >
             <i class="close icon"></i>
             <div class="header">提示:</div>
-            <p>上传成功!</p>
+            <p th:text="${message}">上传成功!</p>
+        </div>
+        <div id="failed-message"  class="ui negative message" style="display: none">
+            <i class="close icon"></i>
+            <div class="header">提示:</div>
+            <p id="faild-message">上传失败，请联系管理员!</p>
         </div>
         <div  class="ui container">
             <div class="ui segments">
                 <div class="ui segment">
-                    <div class="ui  progress success" id="progress-bar">
+                    <div class="ui  progress success" id="progress-bar" style="display: none">
                         <div class="bar">
                             <div class="progress"></div>
                         </div>
@@ -56,13 +61,13 @@
                             <div class="column">
                                 <div class="ui centered two column grid">
                                     <div class="column">
-                                        <input id="upload" type="file" name="files" th:data-url="@{/admin/disk/upload}" data-url="/multifile" multiple style="display: none">
+                                        <input id="upload" type="file" name="files" th:attr="data-url=@{/admin/disk/upload}" data-url="/multifile" multiple style="display: none">
                                         <div class="ui inverted teal compact menu">
                                             <div class="ui simple dropdown item">
                                                 上传
                                                 <i class="dropdown icon"></i>
                                                 <div class="menu">
-                                                    <div id="btn-upload" class="item">文件</div>
+                                                    <div id="btn-upload" data-parentid="-1" class="item">文件</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -89,15 +94,21 @@
                             <div class="two column row">
                                 <div class="left floated column">
                                     <div  class="ui breadcrumb">
-                                        <a class="section">Home</a>
+                                        <a th:attr="onclick='queryFile(this)'"  th:data-parentid="-1" class="section">全部文件</a>
                                         <div class="divider"> / </div>
+                                        <th:block th:each="crumb,iterStat : ${crumbs}">
+                                            <a th:attr="onclick='queryFile(this)'"  th:data-parentid="${crumb.parentId}" th:classappend="${iterStat.last?'active':''}" th:text="${crumb.name}" class="section">Home</a>
+                                            <div class="divider"> / </div>
+                                        </th:block>
+                                        <!--/*-->
                                         <a class="section">Store</a>
                                         <div class="divider"> / </div>
                                         <div class="active section">T-Shirt</div>
+                                        <!--*/-->
                                     </div>
                                 </div>
                                 <div class="ui right aligned right floated column">
-                                    已全部加载共68个
+                                    已全部加载共 <span th:text="${fileNum}" class="m-teal">68</span> 个
                                 </div>
                             </div>
                         </div>
@@ -113,7 +124,12 @@
                             </thead>
                             <tbody>
                             <tr th:each="row : ${files}">
-                                <td th:classappend="${row.dir? 'folder':''}" th:data-parentid="${row.id}" class="collapsing">
+                                <td th:if="${row.dir}" th:data-parentid="${row.id}" class="collapsing" th:attr="onclick='queryFile(this)'">
+                                    <i th:unless="${row.dir}" class="file icon"></i>
+                                    <i th:if="${row.dir}" class="folder icon"></i>
+                                    <span th:text="${row.name}">node_modules</span>
+                                </td>
+                                <td th:unless="${row.dir}" th:data-parentid="${row.id}" class="collapsing">
                                     <i th:unless="${row.dir}" class="file icon"></i>
                                     <i th:if="${row.dir}" class="folder icon"></i>
                                     <span th:text="${row.name}">node_modules</span>
@@ -124,15 +140,18 @@
                                             <div th:text="${row.type}" class="left floated column">
                                                 Initial commit
                                             </div>
-                                            <div th:unless="${row.dir}" class="right floated column">
+                                            <div  class="right floated column">
                                                 <div class="ui dropdown">
                                                     <i class="dropdown icon"></i>
                                                     <div class="menu">
-                                                        <div class="item">移动</div>
-                                                        <div class="item">复制</div>
-                                                        <div class="item">删除</div>
-                                                        <div class="item">下载</div>
-                                                        <div class="item">重命名</div>
+                                                        <div th:unless="${row.dir}" th:onclick="downloadFile([[${row.id}]])" class="item">
+                                                            下载
+                                                            <form th:id="'download-form-id-' + ${row.id}" action="/admin/disk/download" method="post" >
+                                                                <input type="hidden" name="id" th:value="${row.id}">
+                                                            </form>
+                                                        </div>
+                                                        <div th:onclick="deleteFile([[${row.id}]])" class="item">删除</div>
+                                                        <div th:onclick="showRenameModel([[${row.id}]])" class="item">重命名</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,7 +196,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui mini modal">
+        <div id="model-newdir" class="ui mini modal">
             <div class="header">请输入文件夹名称</div>
             <div class="content">
                 <form th:action="@{/admin/disk/mkdirs}" class="ui form" method="post">
@@ -189,6 +208,18 @@
                         <button class="ui  teal button" type="submit">新建</button>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div id="model-rename" class="ui mini modal">
+            <div class="header">请输入新名称</div>
+            <div class="content">
+                <input id="model-rename-id" type="hidden" name="id" value="-1">
+                <div class="ui input">
+                    <input id="model-rename-name" type="text" name="name" placeholder="新名称">
+                </div>
+                <div class="ui right aligned container">
+                    <button onclick="renameFile()" type="button" class="ui teal button">提交</button>
+                </div>
             </div>
         </div>
     </div>
@@ -244,45 +275,111 @@
         on : 'hover'
     });
     $('#btn-mkdir').click(function () {
-        $('.mini.modal')
-            .modal('show')
-        ;
+        $('#model-newdir')
+            .modal('show');
     });
-    $('.folder').click(function (obj) {
-        var parentid = $(this).data('parentid');
-        console.log(parentid)
-        $("[name='parentId']").val(parentid);
-        $.ajaxSetup ({
-            cache: false
+    function downloadFile(id) {
+        var select = '#download-form-id-' + id;
+        console.log(select);
+        $(select).submit();
+    };
+    function deleteFile(id) {
+        $.post("/admin/disk/delete", {
+            id : id
+        },function (res) {
+            if (res.success) {
+                queryFile($('#btn-upload'));
+            } else {
+                showUploadErr();
+                $('#faild-message').text('文件删除失败请联系管理员');
+            }
         });
+    };
+    function showRenameModel(id) {
+        $('#model-rename')
+            .modal('show');
+        $('#model-rename-id').val(id);
+    };
+    function renameFile() {
+        $.post("/admin/disk/rename", {
+            id : $('#model-rename-id').val(),
+            name: $('#model-rename-name').val()
+        },function (res) {
+            if (res.success) {
+                queryFile($('#btn-upload'));
+            } else {
+                showUploadErr();
+                if (res.data != undefined){
+                    $('#faild-message').text(res.data);
+                } else {
+                    $('#faild-message').text('文件重命名失败请联系管理员');
+                }
+            }
+            $('#model-rename')
+                .modal('hide');
+        });
+    }
+    // 查询该文件夹下存在的文件
+    function queryFile(obj) {
+        var parentid = $(obj).data('parentid');
+        console.log(parentid);
+        $("[name='parentId']").val(parentid);
         $('#filelist').load(/*[[@{/admin/disk/listAllFile}]]*/"/admin/disk/listAllFile",{
             "parentId": parentid
+        }, function () {
+            // $(window).scrollTo($('#filelist'), 500);
+            $('.ui.dropdown').dropdown({
+                on : 'hover'
+            });
+            $('#btn-upload').data("parentid", parentid);
         });
-    });
+    };
+    $("#btn-upload").click(function () {
+        $('#upload').fileupload({
+            formData: [
+                {
+                    name: 'id',
+                    value: $(this).data('parentid')
+                }
+            ]
+        });
+        $("#upload").click();
+    })
+    function showUploadErr() {
+        $('#progress-bar').fadeOut(500);
+        $('#failed-message').fadeIn(500);
+        $('#failed-message .close')
+            .on('click', function() {
+                $(this)
+                    .closest('.message')
+                    .transition('fade')
+                ;
+            })
+        ;
+    }
     $(function () {
         $('#upload').fileupload({
             dataType: 'json',
-            // add: function (e, data) {
-            //     data.submit();
-            // },
+            fail: function (e,data) {
+                showUploadErr();
+            },
             done: function (e, data) {
-
+                if (data.result.success) {
+                    $('#progress-bar').fadeOut(500);
+                    queryFile($('#btn-upload'));
+                } else {
+                    showUploadErr();
+                }
             },
             progressall: function (e, data) {
+                $('#progress-bar').css('display',"block");
                 var progress = parseInt(data.loaded / data.total * 100, 10);
-                // $('#progress .bar').css(
-                //     'width',
-                //     progress + '%'
-                // );
                 $('#progress-bar').progress({
                     percent: progress
                 });
             }
         });
     });
-    $("#btn-upload").click(function () {
-        $("#upload").click();
-    })
 </script>
 </body>
 </html>

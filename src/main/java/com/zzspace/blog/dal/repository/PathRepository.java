@@ -21,4 +21,16 @@ public class PathRepository extends BaseRepository<PathDO> {
         pathExample.createCriteria().andParentIdEqualTo(id);
         return fetchOne(pathMapper.selectByExample(pathExample));
     }
+
+    public void updateByParentId(PathDO pathDO) {
+        PathExample example = new PathExample();
+        example.createCriteria().andParentIdEqualTo(pathDO.getParentId());
+        pathMapper.updateByExampleSelective(pathDO,example);
+    }
+
+    public void deleteByParentId(Long parentId) {
+        PathExample example = new PathExample();
+        example.createCriteria().andParentIdEqualTo(parentId);
+        pathMapper.deleteByExample(example);
+    }
 }

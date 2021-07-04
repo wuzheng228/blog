@@ -755,7 +755,7 @@ h5,h6{font-size:1em;}
     });
     $(function(){
         var url = $("[name='blogId']").val()
-        if (${'#comment-form'} != undefined) {
+        if (document.getElementById('comment-form') !== undefined) {
             $('#comment-container').load("/comments/" + url);
         }
 
