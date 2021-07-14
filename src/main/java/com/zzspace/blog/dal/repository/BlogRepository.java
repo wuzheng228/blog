@@ -116,4 +116,10 @@ public class BlogRepository extends BaseRepository<BlogDO> {
         example.setLimit(pageable.getLimit());
         return blogMapper.selectByExample(example);
     }
+
+    public Long countBlogByDeleteAndRelease() {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andIsDeletedEqualTo(false).andRealeasedEqualTo(true);
+        return blogMapper.countByExample(example);
+    }
 }

@@ -4,7 +4,8 @@ package com.zzspace.blog.common.enums;
  * Created by 76973 on 2021/6/6 18:55
  */
 public enum DatePatternEnum {
-    yyyy_MM_dd_HH_mm_ss("yyyy-MM-dd HH:mm:ss","年-月-日 时:分:秒");
+    yyyy_MM_dd_HH_mm_ss("yyyy-MM-dd HH:mm:ss","年-月-日 时:分:秒"),
+    MM_dd("MM月dd日", "xx月xx日");
 
     DatePatternEnum(String pattern, String des) {
         this.pattern = pattern;

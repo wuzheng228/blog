@@ -3,6 +3,7 @@ package com.zzspace.blog.web;
 
 import com.zzspace.blog.config.properties.BizProperties;
 import com.zzspace.blog.model.dto.*;
+import com.zzspace.blog.model.query.ArchiveQuery;
 import com.zzspace.blog.model.query.BlogQuery;
 import com.zzspace.blog.model.query.Pageable;
 import com.zzspace.blog.service.BlogService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -85,4 +87,17 @@ public class IndexController {
         return "tags";
     }
 
+    @GetMapping("/index/archives")
+    public String showArchives(Pageable pageable, Model model) {
+        ArchiveDTO archiveDTO = blogService.generateArchive(pageable);
+        model.addAttribute("archives", archiveDTO);
+        return "archives";
+    }
+
+    @PostMapping("/index/archives")
+    public String archivesPage(ArchiveQuery archiveQuery, Model model) {
+        PageDTO<ArchiveDTO.Item> page = blogService.queryArchive(archiveQuery);
+        model.addAttribute("page", page);
+        return "archives :: list";
+    }
 }

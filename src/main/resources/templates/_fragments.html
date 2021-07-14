@@ -21,7 +21,7 @@
         <a class="m-item item m-mobile-hide" th:href="@{/}" href="#" th:classappend="${n == 0} ? 'active'"><i class="home icon"></i>首页</a>
         <a class="m-item item m-mobile-hide" th:href="@{/index/type}" href="#" th:classappend="${n == 1} ? 'active'"><i class="idea icon"></i>分类</a>
         <a class="m-item item m-mobile-hide" th:href="@{/index/tag}" href="#" th:classappend="${n == 2} ? 'active'"><i class="tags icon"></i>标签</a>
-        <a class="m-item item m-mobile-hide" href="#" th:classappend="${n == 3} ? 'active'"><i class="clone icon"></i>归档</a>
+        <a class="m-item item m-mobile-hide" th:href="@{/index/archives}" href="#" th:classappend="${n == 3} ? 'active'"><i class="clone icon"></i>归档</a>
         <a class="m-item item m-mobile-hide" href="#" th:classappend="${n == 4} ? 'active'"><i class="info icon"></i>icon关于我</a>
         <div class="m-item right item m-mobile-hide">
           <form name="search" action="" th:action="@{/index/search}" method="get" target="_blank">

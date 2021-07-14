@@ -4,11 +4,11 @@ import com.zzspace.blog.common.strategy.impl.DateFormaters;
 import com.zzspace.blog.common.util.ConvertUtils;
 import com.zzspace.blog.common.util.MarkdownUtils;
 import com.zzspace.blog.dal.domain.*;
+import com.zzspace.blog.dal.mapper.BlogMapper;
 import com.zzspace.blog.dal.repository.*;
-import com.zzspace.blog.model.dto.BlogDTO;
-import com.zzspace.blog.model.dto.PageDTO;
-import com.zzspace.blog.model.dto.TagDTO;
-import com.zzspace.blog.model.dto.TypeDTO;
+import com.zzspace.blog.dao.BlogDAO;
+import com.zzspace.blog.model.dto.*;
+import com.zzspace.blog.model.query.ArchiveQuery;
 import com.zzspace.blog.model.query.BlogQuery;
 import com.zzspace.blog.model.query.Pageable;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -32,6 +29,8 @@ public class BlogService {
     private TypeRepository repository;
     @Resource
     private BlogRepository blogRepository;
+    @Resource
+    private BlogDAO blogDAO;
     @Resource
     private UserRepository userRepository;
     @Resource
@@ -214,5 +213,38 @@ public class BlogService {
         BlogDO blogDO = blogRepository.selectByPrimaryKey(id);
         blogDO.setView(blogDO.getView() + 1);
         return blogRepository.updateBlogById(blogDO);
+    }
+
+    /**
+     * 生成归档信息
+     */
+    public ArchiveDTO generateArchive(Pageable pageable) {
+        ArchiveDTO archiveDTO = new ArchiveDTO();
+        Long num = blogRepository.countBlogByDeleteAndRelease();
+        archiveDTO.setTotalBlog(num);
+        Map<String, PageDTO<ArchiveDTO.Item>> archives = new LinkedHashMap<>();
+        List<String> groupYear = blogDAO.findGroupYear();
+        for (String year : groupYear) {
+            Long total = blogDAO.countByYear(year);
+            List<BlogDO> blogDOS = blogDAO.listByYear(year, pageable);
+            List<ArchiveDTO.Item> items = ConvertUtils.convertList(blogDOS, ArchiveDTO.Item.class);
+            PageDTO<ArchiveDTO.Item> pageDTO = new PageDTO<>(pageable, total);
+            pageDTO.setPageData(items);
+            archives.put(year, pageDTO);
+        }
+        archiveDTO.setArchives(archives);
+        return archiveDTO;
+    }
+
+    /**
+     * 根据年份查询归档信息
+     */
+    public PageDTO<ArchiveDTO.Item> queryArchive(ArchiveQuery archiveQuery) {
+        Long total = blogDAO.countByYear(archiveQuery.getYear());
+        List<BlogDO> blogDOS = blogDAO.listByYear(archiveQuery.getYear(), archiveQuery);
+        List<ArchiveDTO.Item> items = ConvertUtils.convertList(blogDOS, ArchiveDTO.Item.class);
+        PageDTO<ArchiveDTO.Item> pageDTO = new PageDTO<>(archiveQuery, total);
+        pageDTO.setPageData(items);
+        return pageDTO;
     }
 }
