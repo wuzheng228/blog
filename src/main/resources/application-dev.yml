@@ -13,3 +13,7 @@ zzspace.blog:
       admin: /images/admin.jpg
   imagePath: D:/upload/image/
   rootFilePath: D:/upload/
+  mysql:
+    url: jdbc:mysql://localhost:3306/blog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123

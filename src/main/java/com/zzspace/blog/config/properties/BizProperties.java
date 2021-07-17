@@ -21,6 +21,12 @@ public class BizProperties {
     private String imagePath;
     @Value("${zzspace.blog.rootFilePath}")
     private String rootFilePath;
+    @Value("${zzspace.blog.mysql.url}")
+    private String mysqlUrl;
+    @Value("${zzspace.blog.mysql.username}")
+    private String username;
+    @Value("${zzspace.blog.mysql.password}")
+    private String password;
 
     public int getTopk() {
         return topk;
@@ -60,5 +66,29 @@ public class BizProperties {
 
     public void setRootFilePath(String rootFilePath) {
         this.rootFilePath = rootFilePath;
+    }
+
+    public String getMysqlUrl() {
+        return mysqlUrl;
+    }
+
+    public void setMysqlUrl(String mysqlUrl) {
+        this.mysqlUrl = mysqlUrl;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
