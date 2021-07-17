@@ -47,4 +47,6 @@ public class BlogQuery extends Pageable implements Serializable {
     public boolean isRecommend() {
         return recommend;
     }
+
+
 }

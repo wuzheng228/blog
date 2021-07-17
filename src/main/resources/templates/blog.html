@@ -42,7 +42,7 @@
            <div class="ui top attached segment">
                <div class="ui horizontal link list">
                    <div class="item">
-                       <img src="https://dummyimage.com/100x100/000/fff" alt="" class="ui avatar image">
+                       <img th:src="${user.avatar}" src="https://dummyimage.com/100x100/000/fff" alt="" class="ui avatar image">
                        <div class="content">
                            <div class="header"><a href="#" th:text="${user.username}">Warms</a></div>
                        </div>
@@ -457,7 +457,7 @@ h5,h6{font-size:1em;}
                <div class="ui center aligned basic segment">
                    <button id="payButton" class="ui basic circular orange button">赞赏</button>
                </div>
-               <div class="ui payPopup flowing popup transition hidden">
+               <div class="ui payPopup flowing popup transition hidden" style="z-index: 99!important;">
                    <div class="ui orange basic label">
                        <div class="ui images" style="font-size: inherit !important;">
                            <div class="image">
@@ -489,10 +489,10 @@ h5,h6{font-size:1em;}
                 </div>
            </div>
            <!--留言区域-->
-           <div class=" ui bottom attached segment" >
+           <div th:if="${content.commentOn}" class=" ui bottom attached segment" >
                <!--留言区域列表-->
-               <div class="ui teal segment" id="comment-container">
-                   <div th:fragment="commentList">
+               <div  class="ui teal segment" id="comment-container">
+                   <div th:fragment="commentList" >
                        <div class="ui comments" style="max-width: 100%!important;">
                            <h3 class="ui dividing header">评论</h3>
                            <div th:each="comment : ${comments}" class="comment">
@@ -676,7 +676,7 @@ h5,h6{font-size:1em;}
     <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
     <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
 <!--/*/</th:block>/*/-->
-<script>
+<script th:inline="javascript">
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
@@ -706,8 +706,10 @@ h5,h6{font-size:1em;}
         position: 'left center',
         on:'hover'
     });
+    var baseUrl = /*[[#{blog.server}]]*/"wwww";
+    var url = /*[[@{/index/show/{id}(id=${content.id})}]]*/"wwww";
     var qrcode = new QRCode("qrcode", {
-        text: "http://jindo.dev.naver.com/collie",
+        text: baseUrl + url,
         width: 110,
         height: 110,
         colorDark : "#000000",
@@ -755,7 +757,9 @@ h5,h6{font-size:1em;}
     });
     $(function(){
         var url = $("[name='blogId']").val()
-        if (document.getElementById('comment-form') !== undefined) {
+        console.log(url)
+        console.log(document.getElementById('comment-form'))
+        if (document.getElementById('comment-form') !== null) {
             $('#comment-container').load("/comments/" + url);
         }
 

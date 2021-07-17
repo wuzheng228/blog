@@ -40,28 +40,18 @@ public class BlogService {
     /**
      * 分页查询博客信息
      */
-    public PageDTO<BlogDTO> listBlog(BlogQuery blogQuery) {
-        Long total = blogRepository.countBlogNotDeleted();
-        List<BlogDO> blogDOS = blogRepository.listBlog(blogQuery);
-        if (blogQuery.getTagId() != null) {
-            List<BlogDO> res = new ArrayList<>();
-           blogDOS.forEach(o -> {
-                List<BlogTagDO> blogTagDOS = blogTagRepository.selectByBlogId(o.getId());
-                List<Long> tagIds = blogTagDOS.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
-                if (tagIds.contains(blogQuery.getTagId())) {
-                    res.add(o);
-                }
-            });
-           blogDOS = res;
-        }
+    public PageDTO<BlogDTO> listBlogByType(BlogQuery blogQuery) {
+        Long count = blogRepository.countBlogByTypeId(blogQuery.getTypeId());
+        List<BlogDO> blogDOS = blogRepository.listBlogByCondition(blogQuery);
         List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class);
-        PageDTO<BlogDTO> pageDTO = new PageDTO<>(blogQuery, total);
+        PageDTO<BlogDTO> pageDTO = new PageDTO<>(blogQuery, count);
         for (int i = 0; i < blogDOS.size(); i++) {
             BlogDTO each = blogDTOS.get(i);
             TypeDO typeDO = repository.findTypeById(each.getTypeId());
-            blogDTOS.get(i).setType(ConvertUtils.convert(typeDO, TypeDTO.class));
+            each.setType(ConvertUtils.convert(typeDO, TypeDTO.class));
             UserDO user = userRepository.findUserById(each.getUserId());
-            blogDTOS.get(i).setUsername(user.getUsername());
+            each.setUsername(user.getUsername());
+            each.setAvatar(user.getAvatar());
             List<BlogTagDO> blogTagDOS = blogTagRepository.selectByBlogId(each.getId());
             List<String> tagNames = new ArrayList<>();
             for (BlogTagDO blogTagDO : blogTagDOS) {
@@ -93,6 +83,7 @@ public class BlogService {
      * 分页查询主页博客信息
      */
     public PageDTO<BlogDTO> queryIndexInfo(Pageable pageable) {
+        Long total = blogRepository.countBlogByDeleteAndRelease();
         List<BlogDO> blogDOS = blogRepository.queryIndexInfo(pageable);
         List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class, DateFormaters.yyyy_MM_dd);
         blogDTOS.forEach((o)->{
@@ -100,8 +91,9 @@ public class BlogService {
             o.setType(ConvertUtils.convert(typeDO,TypeDTO.class));
             UserDO user = userRepository.findUserById(o.getUserId());
             o.setUsername(user.getUsername());
+            o.setAvatar(user.getAvatar());
         });
-        PageDTO<BlogDTO> pageDTO = new PageDTO<>(pageable, (long) blogDTOS.size());
+        PageDTO<BlogDTO> pageDTO = new PageDTO<>(pageable, total);
         pageDTO.setPageData(blogDTOS);
         return pageDTO;
     }
@@ -192,6 +184,9 @@ public class BlogService {
         return pageDTO;
     }
 
+    /**
+     * 根据Like正则表达式分页查询博客
+     */
     public PageDTO<BlogDTO> listBlogByLike(String query, Pageable pageable) {
         List<BlogDO>  blogDOS =  blogRepository.listBlogByLike(query, pageable);
         List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class, DateFormaters.yyyy_MM_dd_HH_mm_ss);
@@ -200,6 +195,7 @@ public class BlogService {
             o.setType(ConvertUtils.convert(typeDO,TypeDTO.class));
             UserDO user = userRepository.findUserById(o.getUserId());
             o.setUsername(user.getUsername());
+            o.setAvatar(user.getAvatar());
         });
         PageDTO<BlogDTO> pageDTO = new PageDTO<>(pageable, (long) blogDOS.size());
         pageDTO.setPageData(blogDTOS);
@@ -220,8 +216,8 @@ public class BlogService {
      */
     public ArchiveDTO generateArchive(Pageable pageable) {
         ArchiveDTO archiveDTO = new ArchiveDTO();
-        Long num = blogRepository.countBlogByDeleteAndRelease();
-        archiveDTO.setTotalBlog(num);
+        Long count = blogRepository.countBlogByDeleteAndRelease();
+        archiveDTO.setTotalBlog(count);
         Map<String, PageDTO<ArchiveDTO.Item>> archives = new LinkedHashMap<>();
         List<String> groupYear = blogDAO.findGroupYear();
         for (String year : groupYear) {
@@ -245,6 +241,60 @@ public class BlogService {
         List<ArchiveDTO.Item> items = ConvertUtils.convertList(blogDOS, ArchiveDTO.Item.class);
         PageDTO<ArchiveDTO.Item> pageDTO = new PageDTO<>(archiveQuery, total);
         pageDTO.setPageData(items);
+        return pageDTO;
+    }
+
+
+    /**
+     * 根据TagId分页查询博客
+     */
+    public PageDTO<BlogDTO> listBlogByTag(BlogQuery blogQuery) {
+        Long count = blogDAO.countBlogByTagId(blogQuery.getTagId());
+        List<BlogDO> blogDOS = blogDAO.listBlogByTagId(blogQuery);
+        List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class);
+        PageDTO<BlogDTO> pageDTO = new PageDTO<>(blogQuery, count);
+        for (int i = 0; i < blogDOS.size(); i++) {
+            BlogDTO each = blogDTOS.get(i);
+            TypeDO typeDO = repository.findTypeById(each.getTypeId());
+            each.setType(ConvertUtils.convert(typeDO, TypeDTO.class));
+            UserDO user = userRepository.findUserById(each.getUserId());
+            each.setUsername(user.getUsername());
+            each.setAvatar(user.getAvatar());
+            List<BlogTagDO> blogTagDOS = blogTagRepository.selectByBlogId(each.getId());
+            List<String> tagNames = new ArrayList<>();
+            for (BlogTagDO blogTagDO : blogTagDOS) {
+                TagDO tagDO = tagRepository.selectByPrimaryKey(blogTagDO.getTagId());
+                tagNames.add(tagDO.getName());
+            }
+            each.setTagNames(tagNames);
+        }
+        pageDTO.setPageData(blogDTOS);
+        return pageDTO;
+    }
+
+    /**
+     * 根据查询条件分页查询博客
+     */
+    public PageDTO<BlogDTO> listBlog(BlogQuery blogQuery) {
+        Long count = blogRepository.countBlogByDeleteAndRelease();
+        List<BlogDO> blogDOS = blogRepository.listBlogByCondition(blogQuery);
+        List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class);
+        PageDTO<BlogDTO> pageDTO = new PageDTO<>(blogQuery, count);
+        for (int i = 0; i < blogDOS.size(); i++) {
+            BlogDTO each = blogDTOS.get(i);
+            TypeDO typeDO = repository.findTypeById(each.getTypeId());
+            blogDTOS.get(i).setType(ConvertUtils.convert(typeDO, TypeDTO.class));
+            UserDO user = userRepository.findUserById(each.getUserId());
+            blogDTOS.get(i).setUsername(user.getUsername());
+            List<BlogTagDO> blogTagDOS = blogTagRepository.selectByBlogId(each.getId());
+            List<String> tagNames = new ArrayList<>();
+            for (BlogTagDO blogTagDO : blogTagDOS) {
+                TagDO tagDO = tagRepository.selectByPrimaryKey(blogTagDO.getTagId());
+                tagNames.add(tagDO.getName());
+            }
+            each.setTagNames(tagNames);
+        }
+        pageDTO.setPageData(blogDTOS);
         return pageDTO;
     }
 }

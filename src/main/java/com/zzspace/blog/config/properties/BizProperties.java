@@ -19,8 +19,6 @@ public class BizProperties {
     private String adminAvatar;
     @Value("${zzspace.blog.imagePath}")
     private String imagePath;
-    @Value("${zzspace.blog.filePath}")
-    private String filePath;
     @Value("${zzspace.blog.rootFilePath}")
     private String rootFilePath;
 
@@ -54,14 +52,6 @@ public class BizProperties {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
     }
 
     public String getRootFilePath() {

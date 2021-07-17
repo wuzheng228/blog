@@ -4,3 +4,6 @@ spring:
     cache: false
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 1024MB

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzspace.blog.dao.BlogDAO">
+    <select id="listBlogByTagId" parameterType="com.zzspace.blog.model.query.BlogQuery" resultType="com.zzspace.blog.dal.domain.BlogDO">
+        select * from tb_blog b join tb_blog_tag tb where b.id = tb.blog_id and is_deleted = false and realeased = true
+        <if test="tagId != null">
+            and tb.tag_id = #{tagId}
+        </if>
+        limit #{startRow},#{pageSize}
+    </select>
+    <select id="countBlogByTagId" parameterType="Long" resultType="Long">
+        select count(*) from tb_blog b join tb_blog_tag tb where b.id = tb.blog_id and is_deleted = false and realeased = true
+        <if test="id != null">
+            and tb.tag_id = #{id}
+        </if>
+    </select>
+</mapper>

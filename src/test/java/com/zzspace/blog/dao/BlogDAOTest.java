@@ -1,6 +1,7 @@
 package com.zzspace.blog.dao;
 
 import com.zzspace.blog.dal.domain.BlogDO;
+import com.zzspace.blog.model.query.BlogQuery;
 import com.zzspace.blog.model.query.Pageable;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +16,6 @@ import java.util.List;
 public class BlogDAOTest {
     @Resource
     private BlogDAO blogDAO;
-    @Test
-    public void listAllBlogTest() {
-        List<BlogDO> blogDOS = blogDAO.listBlog();
-        System.out.println(blogDOS);
-    }
 
     @Test
     public void findGroupByYear() {
@@ -32,5 +28,13 @@ public class BlogDAOTest {
         List<BlogDO> strings = blogDAO.listByYear("2021", new Pageable());
         System.out.println(strings.size());
 //        System.out.println(strings);
+    }
+
+    @Test
+    public void countByTagId() {
+        BlogQuery blogQuery = new BlogQuery();
+        blogQuery.setTagId(18L);
+        Long aLong = blogDAO.countBlogByTagId(blogQuery.getTagId());
+        System.out.println(aLong);
     }
 }

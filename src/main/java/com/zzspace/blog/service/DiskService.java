@@ -145,6 +145,7 @@ public class DiskService {
         }
         while (true) {
             FileDO fileDO = fileRepository.findById(parentId);
+            if (fileDO == null) break;
             CrumbDTO crumbDTO = new CrumbDTO();
             crumbDTO.setName(fileDO.getName());
             crumbDTO.setParentId(fileDO.getId());
@@ -257,5 +258,10 @@ public class DiskService {
         FileDO fileDO = fileRepository.findById(id);
         FileDO record = fileRepository.findByFileNameAndParentId(DiskUtils.parseFileName(fileDO.getPath()), fileDO.getParentId());
         return record != null;
+    }
+
+    public String copyRealNameById(Long id) {
+        FileDO fileDO = fileRepository.findById(id);
+        return DiskUtils.parseFileName(fileDO.getPath());
     }
 }

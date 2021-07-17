@@ -22,12 +22,11 @@ public class BlogRepository extends BaseRepository<BlogDO> {
     @Resource
     private BlogMapper blogMapper;
 
-    public List<BlogDO> listBlog(BlogQuery blogQuery) {
+    public List<BlogDO> listBlogByCondition(BlogQuery blogQuery) {
         BlogExample example = new BlogExample();
         BlogExample.Criteria criteria = example.createCriteria();
         String title = blogQuery.getTitle();
         Integer typeId = blogQuery.getTypeId();
-        Long tagId = blogQuery.getTagId();
         boolean recommend = blogQuery.getRecommend();
         if (StringUtils.isNotBlank(title)) {
             criteria.andCustomCriterion("title like '%" + title +"%'");
@@ -78,9 +77,12 @@ public class BlogRepository extends BaseRepository<BlogDO> {
         return blogMapper.selectByExample(example);
     }
 
-    public long countBlogByTypeId(int id) {
+    public long countBlogByTypeId(Integer id) {
         BlogExample example = new BlogExample();
-        example.createCriteria().andIsDeletedEqualTo(false).andTypeIdEqualTo(id);
+        BlogExample.Criteria criteria = example.createCriteria().andIsDeletedEqualTo(false).andRealeasedEqualTo(true);
+        if (id != null) {
+            criteria .andTypeIdEqualTo(id);
+        }
         return blogMapper.countByExample(example);
     }
 

@@ -10,6 +10,7 @@ import com.zzspace.blog.service.BlogService;
 import com.zzspace.blog.service.TagService;
 import com.zzspace.blog.service.TypeService;
 import com.zzspace.blog.service.UserService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -69,7 +72,7 @@ public class IndexController {
     @GetMapping("/index/type")
     public String showTypes(BlogQuery blogQuery, Model model) {
         List<TypeDTO> types = typeService.findTopKType(null);
-        PageDTO<BlogDTO> page = blogService.listBlog(blogQuery);
+        PageDTO<BlogDTO> page = blogService.listBlogByType(blogQuery);
         model.addAttribute("selectedType", blogQuery.getTypeId());
         model.addAttribute("types", types);
         model.addAttribute("page", page);
@@ -79,8 +82,7 @@ public class IndexController {
     @GetMapping("/index/tag")
     public String showTags(BlogQuery blogQuery, Model model) {
         List<TagDTO> tags = tagService.findTopKTags(null);
-        PageDTO<BlogDTO> page = blogService.listBlog(blogQuery);
-        System.out.println(page.getPageCount());
+        PageDTO<BlogDTO> page = blogService.listBlogByTag(blogQuery);
         model.addAttribute("selectedTag", blogQuery.getTagId());
         model.addAttribute("tags", tags);
         model.addAttribute("page", page);
@@ -99,5 +101,10 @@ public class IndexController {
         PageDTO<ArchiveDTO.Item> page = blogService.queryArchive(archiveQuery);
         model.addAttribute("page", page);
         return "archives :: list";
+    }
+
+    @GetMapping("/index/about")
+    public String toAboutPage() {
+        return "about";
     }
 }

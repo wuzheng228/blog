@@ -18,6 +18,7 @@ public class BlogDTO implements Serializable {
     private List<String> tagNames;
     private Integer userId;
     private String username;
+    private String avatar;
     private String content;
     private String firstPicture;
     private String flag;
@@ -195,4 +196,11 @@ public class BlogDTO implements Serializable {
         this.gmtModified = gmtModified;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

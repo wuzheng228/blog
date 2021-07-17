@@ -124,14 +124,12 @@
                             </thead>
                             <tbody>
                             <tr th:each="row : ${files}">
-                                <td th:if="${row.dir}" th:data-parentid="${row.id}" class="collapsing" th:attr="onclick='queryFile(this)'">
-                                    <i th:unless="${row.dir}" class="file icon"></i>
-                                    <i th:if="${row.dir}" class="folder icon"></i>
+                                <td th:if="${row.dir}" th:data-parentid="${row.id}" class="collapsing m-cursor-style" th:attr="onclick='queryFile(this)'">
+                                    <i class="folder icon"></i>
                                     <span th:text="${row.name}">node_modules</span>
                                 </td>
                                 <td th:unless="${row.dir}" th:data-parentid="${row.id}" class="collapsing">
-                                    <i th:unless="${row.dir}" class="file icon"></i>
-                                    <i th:if="${row.dir}" class="folder icon"></i>
+                                    <i class="file icon"></i>
                                     <span th:text="${row.name}">node_modules</span>
                                 </td>
                                 <td>
@@ -149,6 +147,10 @@
                                                             <form th:id="'download-form-id-' + ${row.id}" action="/admin/disk/download" method="post" >
                                                                 <input type="hidden" name="id" th:value="${row.id}">
                                                             </form>
+                                                        </div>
+                                                        <div th:unless="${row.dir}" th:onclick="copy([[${row.id}]])" class="item">
+                                                            复制链接
+                                                            <input th:id="'copy-form-id-' + ${row.id}" type="hidden">
                                                         </div>
                                                         <div th:onclick="deleteFile([[${row.id}]])" class="item">删除</div>
                                                         <div th:onclick="showRenameModel([[${row.id}]])" class="item">重命名</div>
@@ -267,7 +269,7 @@
 <script th:src="@{/lib/upload/jquery.fileupload.js}" src="../../static/lib/upload/jquery.fileupload.js" ></script>
 <script th:src="@{/lib/editormd/editormd.amd.min.js}" src="../../static/lib/editormd/editormd.amd.min.js" ></script>
 <!--/*/</th:block>/*/-->
-<script>
+<script th:inline="javascript">
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
@@ -280,9 +282,25 @@
     });
     function downloadFile(id) {
         var select = '#download-form-id-' + id;
-        console.log(select);
+        // console.log(select);
         $(select).submit();
     };
+    function copy(id) {
+        var select = '#copy-form-id-'+ id;
+        var baseUrl = /*[[#{blog.server}]]*/"#";
+        $.post(/*[[@{/admin/disk/copy}]]*/"/",{
+            id:id
+        }, function (res) {
+            if (res.success) {
+                $(select).val(baseUrl + '/image/' + res.data);
+                document.getElementById('copy-form-id-'+id).select();
+                document.execCommand("Copy")
+            } else {
+                showUploadErr();
+                $('#faild-message').text('复制链接失败请联系管理员');
+            }
+        });
+    }
     function deleteFile(id) {
         $.post("/admin/disk/delete", {
             id : id

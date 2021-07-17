@@ -102,6 +102,18 @@ public class DiskController {
         return Result.failed();
     }
 
+    @ResponseBody
+    @PostMapping("/copy")
+    public Result<String> copyRealNameById(Long id) {
+        try {
+            return Result.success(diskService.copyRealNameById(id));
+        } catch (Exception e) {
+            log.info("复制文件名失败, id: {}", id);
+        }
+        return Result.failed();
+    }
+
+
     @PostMapping("/mkdirs")
     public String mkdir(CrumbDTO crumbDTO, Model model, RedirectAttributes attributes) {
         boolean res = diskService.mkdir(crumbDTO);

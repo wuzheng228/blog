@@ -9,6 +9,7 @@ public class UserDTO implements Serializable {
     private Integer id;
     private String username;
     private String email;
+    private String avatar;
 
     public UserDTO() {
     }
@@ -40,5 +41,13 @@ public class UserDTO implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

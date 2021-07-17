@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,6 +96,7 @@ public class TagService {
         if (topk != null) {
             return Sorters.TOPK_PRIORITI_QUEUE.topK(res, topk, Sorter.DESC);
         }
+        Collections.sort(res, (a, b)->-Long.compare(a.getTotal(), b.getTotal()));
         return res;
     }
 }

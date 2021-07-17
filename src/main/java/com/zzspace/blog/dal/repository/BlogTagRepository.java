@@ -40,5 +40,4 @@ public class BlogTagRepository extends BaseRepository<BlogTagDO> {
         e.createCriteria().andTagIdEqualTo(id);
         return blogTagMapper.countByExample(e);
     }
-
 }
