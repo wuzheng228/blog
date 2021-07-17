@@ -461,11 +461,11 @@ h5,h6{font-size:1em;}
                    <div class="ui orange basic label">
                        <div class="ui images" style="font-size: inherit !important;">
                            <div class="image">
-                               <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
+                               <img src="../static/images/wechat.jpg" th:src="#{qrcode.alipay}" alt="" class="ui rounded bordered image" style="width: 120px">
                                <div>支付宝支付</div>
                            </div>
                            <div class="image">
-                               <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
+                               <img src="../static/images/wechat.jpg" th:src="#{qrcode.wechatpay}" alt="" class="ui rounded bordered image" style="width: 120px">
                                <div>微信支付</div>
                            </div>
                        </div>
@@ -484,7 +484,7 @@ h5,h6{font-size:1em;}
                         </ui>
                     </div>
                     <div class="five wide column">
-                        <img th:src="@{/images/wechat.jpg}" src="../static/images/wechat.jpg" alt="" class="ui rounded right floated bordered image" style="width: 110px">
+                        <img th:src="#{qrcode.contact}" src="../static/images/wechat.jpg" alt="" class="ui rounded right floated bordered image" style="width: 110px">
                     </div>
                 </div>
            </div>
