@@ -5,6 +5,7 @@ import com.zzspace.blog.model.query.BlogQuery;
 import com.zzspace.blog.model.query.Pageable;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface BlogDAO {
     Long countByYear(String year);
 
     Long countBlogByTagId(Long id);
+
+    @Update("update tb_blog b set b.type_id = null where b.type_id = #{id}")
+    int updateNullByTagId(Integer id);
 }

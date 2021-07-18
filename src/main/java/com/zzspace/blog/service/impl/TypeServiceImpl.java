@@ -8,8 +8,10 @@ import com.zzspace.blog.dal.repository.BlogRepository;
 import com.zzspace.blog.dal.repository.TypeRepository;
 import com.zzspace.blog.model.dto.PageDTO;
 import com.zzspace.blog.model.dto.TypeDTO;
+import com.zzspace.blog.model.query.Pageable;
 import com.zzspace.blog.service.TypeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -48,8 +50,13 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public PageDTO<TypeDO> listType(Integer start, Integer pageSize) {
-        return typeRepository.listType(start, pageSize);
+    public PageDTO<TypeDTO> listType(Pageable query) {
+        List<TypeDO> typeDOS = typeRepository.listType(query);
+        Long count = typeRepository.countType();
+        List<TypeDTO> typeDTOS = ConvertUtils.convertList(typeDOS, TypeDTO.class);
+        PageDTO<TypeDTO> page = new PageDTO<>(query, count);
+        page.setPageData(typeDTOS);
+        return page;
     }
 
     @Override
@@ -65,8 +72,11 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public int deleteById(int id) {
-        return typeRepository.deleteById(id);
+    @Transactional
+    public boolean deleteById(int id) {
+        int cblog = blogRepository.updateNullByTagId(id);
+        int cType = typeRepository.deleteById(id);
+        return cblog >= 0 && cType == 1;
     }
 
     @Override

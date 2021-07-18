@@ -12,7 +12,7 @@ public class PageDTO<T> implements Serializable {
 
     private final static int DEFAULT_START_PAGE = 1;
     private final static int DEFAULT_PAGE_SIZE = 10;
-    private final static int DEFAULT_NAV_COUNT = 2;
+    private final static int DEFAULT_NAV_COUNT = 5;
     // 当前页码
     private Integer curpage = DEFAULT_START_PAGE;
     // 每页的条数
@@ -50,7 +50,7 @@ public class PageDTO<T> implements Serializable {
         }
         this.total = total;
 
-        this.pageCount = (int) Math.ceil(this.total / (this.pageSize * 1.0));
+        this.pageCount = (int) Math.ceil(this.total / (this.pageSize * 1.0F));
         this.firstPage = 1;
         this.lastPage = this.pageCount;
 

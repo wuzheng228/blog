@@ -3,6 +3,7 @@ package com.zzspace.blog.web.admin;
 import com.zzspace.blog.dal.domain.TypeDO;
 import com.zzspace.blog.model.dto.PageDTO;
 import com.zzspace.blog.model.dto.TypeDTO;
+import com.zzspace.blog.model.query.Pageable;
 import com.zzspace.blog.service.TypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +28,8 @@ public class TypeController {
     private TypeService typeService;
 
     @GetMapping()
-    public String list(@RequestParam(required = false) Integer start, @RequestParam(required = false) Integer pageSize, Model model) {
-        PageDTO<TypeDO> pageDTO = typeService.listType(start, pageSize);
+    public String list(Pageable query, Model model) {
+        PageDTO<TypeDTO> pageDTO = typeService.listType(query);
         model.addAttribute("page", pageDTO);
         return "admin/type";
     }
@@ -83,7 +84,6 @@ public class TypeController {
             model.addAttribute("error", firstError.getDefaultMessage());
             return "admin/type-input";
         }
-        System.out.println(id);
         int i = typeService.upateTypeById(id, type);
         if (i != 0) {
             attributes.addFlashAttribute("message", "操作成功");
@@ -96,8 +96,8 @@ public class TypeController {
     @GetMapping("/delete/{id}")
     public String deleteType(@PathVariable("id") int id, RedirectAttributes attributes,
                              @RequestParam Integer start, @RequestParam Integer pageSize) {
-        int i = typeService.deleteById(id);
-        if (i != 0) {
+        boolean i = typeService.deleteById(id);
+        if (i) {
             attributes.addFlashAttribute("message","删除成功！");
         } else {
             attributes.addFlashAttribute("message","删除失败！");

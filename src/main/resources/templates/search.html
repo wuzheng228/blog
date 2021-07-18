@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                 <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal basic label m-padding-mini m-text-thin" th:text="${card.type.name}">认知升级</a>
+                                    <a href="#" th:if="${card.type != null}" class="ui teal basic label m-padding-mini m-text-thin" th:text="${card.type.name}">认知升级</a>
                                 </div>
                             </div>
                         </div>

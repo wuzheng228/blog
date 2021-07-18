@@ -5,6 +5,7 @@ import com.zzspace.blog.dal.domain.TypeExample;
 import com.zzspace.blog.dal.mapper.BlogMapper;
 import com.zzspace.blog.dal.mapper.TypeMapper;
 import com.zzspace.blog.model.dto.PageDTO;
+import com.zzspace.blog.model.query.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
@@ -20,8 +21,6 @@ import java.util.PriorityQueue;
 public class TypeRepository {
     @Resource
     private TypeMapper typeMapper;
-    @Resource
-    private BlogMapper blogMapper;
 
     public TypeDO insertType(TypeDO typeDO) {
         int i = typeMapper.insertSelective(typeDO);
@@ -32,15 +31,11 @@ public class TypeRepository {
         return typeMapper.selectByPrimaryKey(id);
     }
 
-    public PageDTO<TypeDO> listType(Integer start, Integer pageSize) {
+    public List<TypeDO> listType(Pageable pageable) {
         TypeExample example = new TypeExample();
-        long count = typeMapper.countByExample(example);
-        PageDTO<TypeDO> pageDTO = new PageDTO<>(start, pageSize, 2, count);
-        example.setOffset((pageDTO.getCurpage() - 1) * pageDTO.getPageSize());
-        example.setLimit(pageDTO.getPageSize());
-        List<TypeDO> typeDOS = typeMapper.selectByExample(example);
-        pageDTO.setPageData(typeDOS);
-        return pageDTO;
+        example.setOffset(pageable.getOffset());
+        example.setLimit(pageable.getLimit());
+        return typeMapper.selectByExample(example);
     }
 
     public List<TypeDO> listType() {
@@ -68,4 +63,7 @@ public class TypeRepository {
         return typeMapper.deleteByPrimaryKey(id);
     }
 
+    public Long countType() {
+        return typeMapper.countByExample(new TypeExample());
+    }
 }
