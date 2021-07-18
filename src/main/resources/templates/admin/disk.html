@@ -150,7 +150,6 @@
                                                         </div>
                                                         <div th:unless="${row.dir}" th:onclick="copy([[${row.id}]])" class="item">
                                                             复制链接
-                                                            <input th:id="'copy-form-id-' + ${row.id}" type="hidden">
                                                         </div>
                                                         <div th:onclick="deleteFile([[${row.id}]])" class="item">删除</div>
                                                         <div th:onclick="showRenameModel([[${row.id}]])" class="item">重命名</div>
@@ -166,27 +165,6 @@
                             <tr >
                                 <td>
                                     <i class="folder icon"></i> test
-                                </td>
-                                <td>Initial commit</td>
-                                <td class="right aligned">10 hours ago</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="folder icon"></i> build
-                                </td>
-                                <td>Initial commit</td>
-                                <td class="right aligned">10 hours ago</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="file outline icon"></i> package.json
-                                </td>
-                                <td>Initial commit</td>
-                                <td class="right aligned">10 hours ago</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="file outline icon"></i> Gruntfile.js
                                 </td>
                                 <td>Initial commit</td>
                                 <td class="right aligned">10 hours ago</td>
@@ -210,6 +188,17 @@
                         <button class="ui  teal button" type="submit">新建</button>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div id="model-copy" class="ui mini modal">
+            <div class="header">文件名如下</div>
+            <div class="content">
+                <div class="ui fluid input">
+                    <input id="copy-name" >
+                </div>
+                <div class="ui right aligned container">
+                    <button id="btn-copy" class="ui teal button copy" data-clipboard-target="#copy-name">复制</button>
+                </div>
             </div>
         </div>
         <div id="model-rename" class="ui mini modal">
@@ -286,21 +275,23 @@
         $(select).submit();
     };
     function copy(id) {
-        var select = '#copy-form-id-'+ id;
-        var baseUrl = /*[[#{blog.server}]]*/"#";
         $.post(/*[[@{/admin/disk/copy}]]*/"/",{
             id:id
         }, function (res) {
             if (res.success) {
-                $(select).val(baseUrl + '/image/' + res.data);
-                document.getElementById('copy-form-id-'+id).select();
-                document.execCommand("Copy")
+                $('#model-copy').modal('show')
+                $('#copy-name').val(res.data);
+                var clipboard = new ClipboardJS('.ui.teal.button.copy');
+                clipboard.on('success', function (e) {
+                    $('#model-copy').modal('hide')
+                });
             } else {
                 showUploadErr();
                 $('#faild-message').text('复制链接失败请联系管理员');
             }
         });
     }
+
     function deleteFile(id) {
         $.post("/admin/disk/delete", {
             id : id
