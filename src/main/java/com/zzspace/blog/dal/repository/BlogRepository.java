@@ -4,12 +4,14 @@ import com.zzspace.blog.dal.domain.BlogDO;
 import com.zzspace.blog.dal.domain.BlogExample;
 import com.zzspace.blog.dal.mapper.BlogMapper;
 import com.zzspace.blog.dal.mapper.BlogTagMapper;
+import com.zzspace.blog.dao.BlogDAO;
 import com.zzspace.blog.model.query.Pageable;
 import com.zzspace.blog.model.query.BlogQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import javax.jnlp.IntegrationService;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.List;
 public class BlogRepository extends BaseRepository<BlogDO> {
     @Resource
     private BlogMapper blogMapper;
+    @Resource
+    private BlogDAO blogDAO;
 
     public List<BlogDO> listBlogByCondition(BlogQuery blogQuery) {
         BlogExample example = new BlogExample();
@@ -123,5 +127,9 @@ public class BlogRepository extends BaseRepository<BlogDO> {
         BlogExample example = new BlogExample();
         example.createCriteria().andIsDeletedEqualTo(false).andRealeasedEqualTo(true);
         return blogMapper.countByExample(example);
+    }
+
+    public int updateNullByTagId(Integer id) {
+        return blogDAO.updateNullByTagId(id);
     }
 }

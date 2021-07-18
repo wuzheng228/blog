@@ -73,11 +73,11 @@
                <tfoot>
                     <tr>
                         <th colspan="6">
-                            <div class="ui pagination menu">
+                            <div th:if="${page.pageCount > 0}" class="ui pagination menu">
                                 <a th:href="@{/admin/tag(pageNo=${page.prevPage})}" class="icon item">
                                     <i class="left chevron icon"></i>
                                 </a>
-                                <a th:classappend="${each==page.curpage?'active':''}" th:each="each : ${#numbers.sequence(page.startNav, page.endNav)}" th:href="@{/admin/tag(pageNo=${each})}" th:text="${each}" class="item">1</a>
+                                <a  th:classappend="${each==page.curpage?'active':''}" th:each="each : ${#numbers.sequence(page.startNav, page.endNav)}" th:href="@{/admin/tag(pageNo=${each})}" th:text="${each}" class="item">1</a>
                                 <!--/*-->
                                 <a class="item">2</a>
                                 <a class="item">3</a>

@@ -4,6 +4,7 @@ package com.zzspace.blog.service;
 import com.zzspace.blog.dal.domain.TypeDO;
 import com.zzspace.blog.model.dto.PageDTO;
 import com.zzspace.blog.model.dto.TypeDTO;
+import com.zzspace.blog.model.query.Pageable;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface TypeService {
 
     TypeDTO findTypeById(int id);
 
-    PageDTO<TypeDO> listType(Integer start, Integer pageSize);
+    PageDTO<TypeDTO> listType(Pageable query);
 
     List<TypeDTO> listType();
 
@@ -23,7 +24,7 @@ public interface TypeService {
 
     TypeDTO findTypeByName(String name);
 
-    int deleteById(int id);
+    boolean deleteById(int id);
 
     List<TypeDTO> findTopKType(Integer k);
 }

@@ -1,6 +1,19 @@
-
 logging:
   level:
-    root: warn # springboot框架本身的级别
+    root: info # springboot框架本身的级别
+    com.zzspace.blog: info
   file:
     name: log/bolg.log
+server:
+  port: 8081
+zzspace.blog:
+  topk: 6
+  avatar:
+    tourist: /images/tourist.png
+    admin: /images/admin.jpg
+  imagePath: /upload/image/
+  rootFilePath: /upload/
+  mysql:
+    url: jdbc:mysql://1.15.237.172/blog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: C3srajh98e

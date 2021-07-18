@@ -98,7 +98,7 @@
                            <tr th:each="blog,iterStat: ${page.getPageData()}">
                                <td th:text="${iterStat.count}">1</td>
                                <td th:text="${blog.title}">可以练习清单</td>
-                               <td th:text="${blog.type.name}">认知升级</td>
+                               <td th:text="${blog.type != null?blog.type.name:'无'}">认知升级</td>
                                <td th:text="${blog.recommend?'是':'否'}">是</td>
                                <td th:text="${blog.gmtModified}">2021-05-08 09:19</td>
                                <td>
