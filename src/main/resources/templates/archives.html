@@ -50,7 +50,7 @@
                 <div class="ui segment">
                     <div  th:id="'archives-'+${iterStat.index}" class="ui fluid vertical menu" >
                         <div th:fragment="list">
-                            <a href="#" target="_blank" class="item" th:each="blog : ${page == null ? item.value.pageData : page.pageData}">
+                            <a onclick="openBlog(this)" th:data-value="${blog.id}" target="_blank" class="item" th:each="blog : ${page == null ? item.value.pageData : page.pageData}">
                                 <span>
                                     <i class="mini teal circle icon" ></i> <span th:text="${blog.title}">关于刻意练习的清单</span>
                                     <div class="ui teal basic left pointing label m-padding-mini" th:text="${blog.gmtCreated}" >9月03</div>
@@ -150,6 +150,9 @@
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
+    function openBlog(obj) {
+        window.open("/index/show/" + $(obj).attr("data-value"),"top");
+    }
     function loadPage(obj, index, year,pageNo, pageSize) {
         console.log(pageNo, pageSize)
         console.log( $(obj))

@@ -1,5 +1,7 @@
 package com.zzspace.blog.common.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TableBlock;
 import org.commonmark.ext.gfm.tables.TablesExtension;
@@ -12,6 +14,10 @@ import org.commonmark.renderer.html.AttributeProvider;
 import org.commonmark.renderer.html.AttributeProviderContext;
 import org.commonmark.renderer.html.AttributeProviderFactory;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Safelist;
+import org.jsoup.safety.Whitelist;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -20,6 +26,24 @@ import java.util.*;
  * Created by 76973 on 2021/6/13 14:27
  */
 public class MarkdownUtils {
+
+    public static String htmlToPlainText(String html) {
+        if (StringUtils.isBlank(html))
+        {
+            return "";
+        }
+        Document document = Jsoup.parse(html);
+        Document.OutputSettings outputSettings = new Document.OutputSettings().prettyPrint(false);
+        document.outputSettings(outputSettings);
+        document.select("br").append("\\n");
+        document.select("p").prepend("\\n");
+        document.select("p").append("\\n");
+        String newHtml = document.html().replaceAll("\\\\n", "\n");
+        String plainText = Jsoup.clean(newHtml, "", Safelist.none(), outputSettings);
+        String result = StringEscapeUtils.unescapeHtml4(plainText.trim());
+        return result;
+    }
+
     /**
      * markdown 转化为html格式
      */

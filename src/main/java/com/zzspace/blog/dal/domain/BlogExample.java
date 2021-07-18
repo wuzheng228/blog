@@ -375,6 +375,76 @@ public class BlogExample {
             return (Criteria) this;
         }
 
+        public Criteria andSummeryIsNull() {
+            addCriterion("summery is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryIsNotNull() {
+            addCriterion("summery is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryEqualTo(String value) {
+            addCriterion("summery =", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryNotEqualTo(String value) {
+            addCriterion("summery <>", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryGreaterThan(String value) {
+            addCriterion("summery >", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryGreaterThanOrEqualTo(String value) {
+            addCriterion("summery >=", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryLessThan(String value) {
+            addCriterion("summery <", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryLessThanOrEqualTo(String value) {
+            addCriterion("summery <=", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryLike(String value) {
+            addCriterion("summery like", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryNotLike(String value) {
+            addCriterion("summery not like", value, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryIn(List<String> values) {
+            addCriterion("summery in", values, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryNotIn(List<String> values) {
+            addCriterion("summery not in", values, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryBetween(String value1, String value2) {
+            addCriterion("summery between", value1, value2, "summery");
+            return (Criteria) this;
+        }
+
+        public Criteria andSummeryNotBetween(String value1, String value2) {
+            addCriterion("summery not between", value1, value2, "summery");
+            return (Criteria) this;
+        }
+
         public Criteria andFirstPictureIsNull() {
             addCriterion("first_picture is null");
             return (Criteria) this;

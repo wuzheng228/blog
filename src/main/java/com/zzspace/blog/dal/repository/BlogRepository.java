@@ -44,6 +44,7 @@ public class BlogRepository extends BaseRepository<BlogDO> {
         criteria.andIsDeletedEqualTo(false);
         example.setLimit(blogQuery.getLimit());
         example.setOffset(blogQuery.getOffset());
+        example.setOrderByClause("gmt_modified desc");
         return blogMapper.selectByExample(example);
     }
 
@@ -74,10 +75,10 @@ public class BlogRepository extends BaseRepository<BlogDO> {
 
     public List<BlogDO> queryIndexInfo(Pageable pageable) {
         BlogExample example = new BlogExample();
-        example.createCriteria().andIsDeletedEqualTo(false);
+        example.createCriteria().andIsDeletedEqualTo(false).andRealeasedEqualTo(true);
         example.setOffset(pageable.getOffset());
         example.setLimit(pageable.getLimit());
-        example.setOrderByClause("gmt_created desc");
+        example.setOrderByClause("gmt_modified desc");
         return blogMapper.selectByExample(example);
     }
 
@@ -120,16 +121,27 @@ public class BlogRepository extends BaseRepository<BlogDO> {
                 .andTitleLike("'%" + query + "%'");
         example.setOffset(pageable.getOffset());
         example.setLimit(pageable.getLimit());
+        example.setOrderByClause("gmt_modified desc");
         return blogMapper.selectByExample(example);
     }
 
     public Long countBlogByDeleteAndRelease() {
         BlogExample example = new BlogExample();
-        example.createCriteria().andIsDeletedEqualTo(false).andRealeasedEqualTo(true);
+        example.createCriteria().andIsDeletedEqualTo(false);
         return blogMapper.countByExample(example);
     }
 
     public int updateNullByTagId(Integer id) {
         return blogDAO.updateNullByTagId(id);
+    }
+
+    public List<BlogDO> listBlogByType(Integer typeId) {
+        BlogExample example = new BlogExample();
+        BlogExample.Criteria criteria = example.createCriteria().andIsDeletedEqualTo(false)
+                .andRealeasedEqualTo(true);
+        if (typeId != null) {
+            criteria.andTypeIdEqualTo(typeId);
+        }
+        return blogMapper.selectByExample(example);
     }
 }

@@ -32,10 +32,19 @@ public class ArchiveDTO implements Serializable {
     }
 
     public static class Item {
+        private Long id;
         private String title;
         @DateFormat(pattern = "MM月dd日")
         private String gmtCreated;
         private String flag;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
 
         public String getTitle() {
             return title;

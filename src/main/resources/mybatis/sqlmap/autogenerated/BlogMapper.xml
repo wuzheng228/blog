@@ -6,6 +6,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="summery" jdbcType="VARCHAR" property="summery" />
     <result column="first_picture" jdbcType="VARCHAR" property="firstPicture" />
     <result column="flag" jdbcType="VARCHAR" property="flag" />
     <result column="view" jdbcType="INTEGER" property="view" />
@@ -80,8 +81,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, type_id, user_id, first_picture, flag, `view`, appreciation_on, copyright_on, 
-    recommend, comment_on, realeased, is_deleted, gmt_created, gmt_modified
+    id, title, type_id, user_id, summery, first_picture, flag, `view`, appreciation_on, 
+    copyright_on, recommend, comment_on, realeased, is_deleted, gmt_created, gmt_modified
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -147,17 +148,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into tb_blog (title, type_id, user_id, 
-      first_picture, flag, `view`, 
-      appreciation_on, copyright_on, recommend, 
-      comment_on, realeased, is_deleted, 
-      gmt_created, gmt_modified, content
-      )
+      summery, first_picture, flag, 
+      `view`, appreciation_on, copyright_on, 
+      recommend, comment_on, realeased, 
+      is_deleted, gmt_created, gmt_modified, 
+      content)
     values (#{title,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{firstPicture,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{view,jdbcType=INTEGER}, 
-      #{appreciationOn,jdbcType=BIT}, #{copyrightOn,jdbcType=BIT}, #{recommend,jdbcType=BIT}, 
-      #{commentOn,jdbcType=BIT}, #{realeased,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, 
-      sysdate(), sysdate(), #{content,jdbcType=LONGVARCHAR}
-      )
+      #{summery,jdbcType=VARCHAR}, #{firstPicture,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, 
+      #{view,jdbcType=INTEGER}, #{appreciationOn,jdbcType=BIT}, #{copyrightOn,jdbcType=BIT}, 
+      #{recommend,jdbcType=BIT}, #{commentOn,jdbcType=BIT}, #{realeased,jdbcType=BIT}, 
+      #{isDeleted,jdbcType=BIT}, sysdate(), sysdate(), 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zzspace.blog.dal.domain.BlogDO">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -173,6 +174,9 @@
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="summery != null">
+        summery,
       </if>
       <if test="firstPicture != null">
         first_picture,
@@ -220,6 +224,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="summery != null">
+        #{summery,jdbcType=VARCHAR},
       </if>
       <if test="firstPicture != null">
         #{firstPicture,jdbcType=VARCHAR},
@@ -280,6 +287,9 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
+      <if test="record.summery != null">
+        summery = #{record.summery,jdbcType=VARCHAR},
+      </if>
       <if test="record.firstPicture != null">
         first_picture = #{record.firstPicture,jdbcType=VARCHAR},
       </if>
@@ -327,6 +337,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       type_id = #{record.typeId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
+      summery = #{record.summery,jdbcType=VARCHAR},
       first_picture = #{record.firstPicture,jdbcType=VARCHAR},
       flag = #{record.flag,jdbcType=VARCHAR},
       `view` = #{record.view,jdbcType=INTEGER},
@@ -349,6 +360,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       type_id = #{record.typeId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
+      summery = #{record.summery,jdbcType=VARCHAR},
       first_picture = #{record.firstPicture,jdbcType=VARCHAR},
       flag = #{record.flag,jdbcType=VARCHAR},
       `view` = #{record.view,jdbcType=INTEGER},
@@ -375,6 +387,9 @@
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="summery != null">
+        summery = #{summery,jdbcType=VARCHAR},
       </if>
       <if test="firstPicture != null">
         first_picture = #{firstPicture,jdbcType=VARCHAR},
@@ -420,6 +435,7 @@
     set title = #{title,jdbcType=VARCHAR},
       type_id = #{typeId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
+      summery = #{summery,jdbcType=VARCHAR},
       first_picture = #{firstPicture,jdbcType=VARCHAR},
       flag = #{flag,jdbcType=VARCHAR},
       `view` = #{view,jdbcType=INTEGER},
@@ -439,6 +455,7 @@
     set title = #{title,jdbcType=VARCHAR},
       type_id = #{typeId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
+      summery = #{summery,jdbcType=VARCHAR},
       first_picture = #{firstPicture,jdbcType=VARCHAR},
       flag = #{flag,jdbcType=VARCHAR},
       `view` = #{view,jdbcType=INTEGER},
@@ -454,16 +471,16 @@
   </update>
   <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     insert into tb_blog
-    (title, type_id, user_id, first_picture, flag, `view`, appreciation_on, copyright_on, 
-      recommend, comment_on, realeased, is_deleted, gmt_created, gmt_modified, content
-      )
+    (title, type_id, user_id, summery, first_picture, flag, `view`, appreciation_on, 
+      copyright_on, recommend, comment_on, realeased, is_deleted, gmt_created, gmt_modified, 
+      content)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.title,jdbcType=VARCHAR}, #{item.typeId,jdbcType=INTEGER}, #{item.userId,jdbcType=INTEGER}, 
-        #{item.firstPicture,jdbcType=VARCHAR}, #{item.flag,jdbcType=VARCHAR}, #{item.view,jdbcType=INTEGER}, 
-        #{item.appreciationOn,jdbcType=BIT}, #{item.copyrightOn,jdbcType=BIT}, #{item.recommend,jdbcType=BIT}, 
-        #{item.commentOn,jdbcType=BIT}, #{item.realeased,jdbcType=BIT}, #{item.isDeleted,jdbcType=BIT}, 
-        #{item.gmtCreated,jdbcType=TIMESTAMP}, #{item.gmtModified,jdbcType=TIMESTAMP}, 
+        #{item.summery,jdbcType=VARCHAR}, #{item.firstPicture,jdbcType=VARCHAR}, #{item.flag,jdbcType=VARCHAR}, 
+        #{item.view,jdbcType=INTEGER}, #{item.appreciationOn,jdbcType=BIT}, #{item.copyrightOn,jdbcType=BIT}, 
+        #{item.recommend,jdbcType=BIT}, #{item.commentOn,jdbcType=BIT}, #{item.realeased,jdbcType=BIT}, 
+        #{item.isDeleted,jdbcType=BIT}, #{item.gmtCreated,jdbcType=TIMESTAMP}, #{item.gmtModified,jdbcType=TIMESTAMP}, 
         #{item.content,jdbcType=LONGVARCHAR})
     </foreach>
   </insert>
@@ -485,6 +502,9 @@
         </if>
         <if test="'user_id'.toString() == column.value">
           #{item.userId,jdbcType=INTEGER}
+        </if>
+        <if test="'summery'.toString() == column.value">
+          #{item.summery,jdbcType=VARCHAR}
         </if>
         <if test="'first_picture'.toString() == column.value">
           #{item.firstPicture,jdbcType=VARCHAR}

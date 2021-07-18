@@ -51,7 +51,7 @@
                     <div class="ui mobile reversed stackable grid">
                         <div class="eleven wide column">
                             <h3 class="ui header m-cursor-style cardTitle" th:text="${card.title}" th:data-value="${card.id}">你知道什么是真正的财富自由吗</h3>
-                            <p class="m-text">正确做好每一件事情的前提是清晰、正确的理解目标。而事实是我们很多人很多时候没有对目标的正确定义</p>
+                            <p th:utext="${card.summery}" class="m-text">正确做好每一件事情的前提是清晰、正确的理解目标。而事实是我们很多人很多时候没有对目标的正确定义</p>
                             <div class="ui stackable grid">
                                 <div class="middle aligned eleven wide column">
                                     <div class="ui mini horizontal link list">

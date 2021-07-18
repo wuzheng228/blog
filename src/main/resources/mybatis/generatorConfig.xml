@@ -53,10 +53,10 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.zzspace.blog.dal.mapper" targetProject="src/main/java">
 
         </javaClientGenerator>
-<!--        <table schema="blog" tableName="tb_blog" domainObjectName="Blog">-->
-<!--            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;BlogDO&gt;"/>-->
-<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-<!--        </table>-->
+        <table schema="blog" tableName="tb_blog" domainObjectName="Blog">
+            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;BlogDO&gt;"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 <!--        <table schema="blog" tableName="tb_comment" domainObjectName="Comment">-->
 <!--            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;CommentDO&gt;"/>-->
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
@@ -65,10 +65,10 @@
 <!--            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;FileDO&gt;"/>-->
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
-        <table schema="blog" tableName="tb_path" domainObjectName="Path">
-            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;PathDO&gt;"/>
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+<!--        <table schema="blog" tableName="tb_path" domainObjectName="Path">-->
+<!--            <property name="rootInterface" value="com.zzspace.blog.dal.mapper.BaseMapper&lt;PathDO&gt;"/>-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
 <!--        <table schema="blog" tableName="tb_comment" domainObjectName="Comment"-->
 <!--               enableDeleteByExample="false" enableDeleteByPrimaryKey="false"/>-->
 <!--        <table schema="blog" tableName="tb_tag" domainObjectName="Tag"-->

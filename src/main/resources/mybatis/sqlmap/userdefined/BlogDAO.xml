@@ -6,6 +6,7 @@
         <if test="tagId != null">
             and tb.tag_id = #{tagId}
         </if>
+        order by gmt_modified
         limit #{startRow},#{pageSize}
     </select>
     <select id="countBlogByTagId" parameterType="Long" resultType="Long">

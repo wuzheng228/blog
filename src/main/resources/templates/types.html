@@ -59,12 +59,12 @@
                 <!--*/-->
             </div>
             <!--文章列表-->
-            <div class="ui teal top attached segment">
+            <div th:unless="${#lists.isEmpty(types) }" class="ui teal top attached segment">
                 <div th:each="card : ${page.pageData}" class="ui padded vertical segment m-padded-tb-large m-mobile-clear">
                     <div class="ui mobile reversed stackable grid">
                         <div class="eleven wide column">
                             <h3 th:data-value="${card.id}" th:text="${card.title}" class="ui header m-cursor-style cardTitle">你知道什么是真正的财富自由吗</h3>
-                            <p class="m-text">正确做好每一件事情的前提是清晰、正确的理解目标。而事实是我们很多人很多时候没有对目标的正确定义</p>
+                            <p th:utext="${card.summery}" class="m-text">正确做好每一件事情的前提是清晰、正确的理解目标。而事实是我们很多人很多时候没有对目标的正确定义</p>
                             <div class="ui stackable grid">
                                 <div class="eleven wide column">
                                     <div class="ui mini horizontal link list">
@@ -136,7 +136,7 @@
                 <!--*/-->
             </div>
             <!--分页-->
-            <div class="ui bottom attached segment">
+            <div th:unless="${#lists.isEmpty(types)}" class="ui bottom attached segment">
                 <div class="ui middle aligned two column grid" th:if="${page.pageCount > 1}">
                     <div class="column">
                         <a th:href="@{/index/type(pageNo=${page.prevPage},typeId=${selectedType!=null?selectedType:null})}" href="" class="ui mini teal basic button">上一页</a>

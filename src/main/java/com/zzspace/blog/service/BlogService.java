@@ -42,7 +42,7 @@ public class BlogService {
      */
     public PageDTO<BlogDTO> listBlogByType(BlogQuery blogQuery) {
         Long count = blogRepository.countBlogByTypeId(blogQuery.getTypeId());
-        List<BlogDO> blogDOS = blogRepository.listBlogByCondition(blogQuery);
+        List<BlogDO> blogDOS = blogRepository.listBlogByType(blogQuery.getTypeId());
         List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class);
         PageDTO<BlogDTO> pageDTO = new PageDTO<>(blogQuery, count);
         for (int i = 0; i < blogDOS.size(); i++) {
@@ -104,6 +104,11 @@ public class BlogService {
     @Transactional
     public int upsertBlog(BlogDTO blogDTO) {
         BlogDO blog = ConvertUtils.convert(blogDTO, BlogDO.class);
+        if (StringUtils.isBlank(blog.getSummery())) {
+            String summeryHtml = MarkdownUtils.markdown2HtmlExtensions(blog.getContent());
+            String plainText = StringUtils.substring(MarkdownUtils.htmlToPlainText(summeryHtml), 0, 100);
+            blog.setSummery(plainText + "....");
+        }
         Long blogId = blog.getId();
         if (blogId != null) {
             List<BlogTagDO> blogTagDOS =  blogTagRepository.selectByBlogId(blogId);
@@ -276,7 +281,7 @@ public class BlogService {
      * 根据查询条件分页查询博客
      */
     public PageDTO<BlogDTO> listBlog(BlogQuery blogQuery) {
-        Long count = blogRepository.countBlogByDeleteAndRelease();
+        Long count = blogRepository.countBlogNotDeleted();
         List<BlogDO> blogDOS = blogRepository.listBlogByCondition(blogQuery);
         List<BlogDTO> blogDTOS = ConvertUtils.convertList(blogDOS, BlogDTO.class);
         PageDTO<BlogDTO> pageDTO = new PageDTO<>(blogQuery, count);

@@ -16,13 +16,13 @@ import java.util.List;
 public interface BlogDAO {
     List<BlogDO> listBlogByTagId(BlogQuery query);
 
-    @Select("select date_format(b.gmt_created, '%Y') as year from tb_blog b where is_deleted = false group by year order by year desc")
+    @Select("select date_format(b.gmt_created, '%Y') as year from tb_blog b where is_deleted = false and realeased = true group by year order by year desc")
     List<String> findGroupYear();
 
-    @Select("select * from tb_blog b where date_format(b.gmt_created, '%Y') = #{year} and is_deleted = false order by b.gmt_created desc limit #{pageable.startRow},#{pageable.pageSize}")
+    @Select("select * from tb_blog b where date_format(b.gmt_created, '%Y') = #{year} and is_deleted = false and realeased = true order by b.gmt_created desc limit #{pageable.startRow},#{pageable.pageSize}")
     List<BlogDO> listByYear(String year, Pageable pageable);
 
-    @Select("select count(*) from tb_blog b where is_deleted = false and date_format(b.gmt_created, '%Y') = #{year}")
+    @Select("select count(*) from tb_blog b where is_deleted = false and realeased = true and date_format(b.gmt_created, '%Y') = #{year}")
     Long countByYear(String year);
 
     Long countBlogByTagId(Long id);

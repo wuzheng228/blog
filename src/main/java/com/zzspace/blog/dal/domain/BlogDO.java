@@ -31,6 +31,12 @@ public class BlogDO implements Serializable {
     private Integer userId;
 
     /**
+     * summery (512)<br>
+     *
+     */ 
+    private String summery;
+
+    /**
      * first_picture (255)<br>
      *首图
      */ 
@@ -186,6 +192,27 @@ public class BlogDO implements Serializable {
      */ 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    /**
+     * summery (512)<br>
+     * 获得 
+     */ 
+    public String getSummery() {
+        return summery;
+    }
+
+    public BlogDO withSummery(String summery) {
+        this.setSummery(summery);
+        return this;
+    }
+
+    /**
+     * summery (512)<br>
+     * 设置 
+     */ 
+    public void setSummery(String summery) {
+        this.summery = summery;
     }
 
     /**
@@ -450,6 +477,7 @@ public class BlogDO implements Serializable {
         sb.append(", title=").append(title);
         sb.append(", typeId=").append(typeId);
         sb.append(", userId=").append(userId);
+        sb.append(", summery=").append(summery);
         sb.append(", firstPicture=").append(firstPicture);
         sb.append(", flag=").append(flag);
         sb.append(", view=").append(view);
@@ -471,6 +499,7 @@ public class BlogDO implements Serializable {
         title("title", "title", "VARCHAR", false),
         typeId("type_id", "typeId", "INTEGER", false),
         userId("user_id", "userId", "INTEGER", false),
+        summery("summery", "summery", "VARCHAR", false),
         firstPicture("first_picture", "firstPicture", "VARCHAR", false),
         flag("flag", "flag", "VARCHAR", false),
         view("view", "view", "INTEGER", true),

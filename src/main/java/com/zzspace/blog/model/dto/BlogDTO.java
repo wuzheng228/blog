@@ -17,6 +17,7 @@ public class BlogDTO implements Serializable {
     private String tagsIds;
     private List<String> tagNames;
     private Integer userId;
+    private String summery;
     private String username;
     private String avatar;
     private String content;
@@ -202,5 +203,13 @@ public class BlogDTO implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getSummery() {
+        return summery;
+    }
+
+    public void setSummery(String summery) {
+        this.summery = summery;
     }
 }

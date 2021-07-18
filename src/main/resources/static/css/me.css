@@ -1,6 +1,11 @@
 /*------body-------*/
 body {
-    background: url("../images/bg2.png") !important;
+    background: url("../images/demo-1-bg.jpg") !important;
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+    /*background-attachment: fixed;*/
+    /*background-position: center;*/
+
     /*min-height: 100% !important;*/
     /*position:relative!important;*/
     /*margin:0;*/
