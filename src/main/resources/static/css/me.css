@@ -11,7 +11,7 @@ body {
     /*margin:0;*/
     /*padding:0;*/
 }
-
+/*padding*/
 .m-padding-mini {
     padding: 0.2em !important;
 }
@@ -93,7 +93,12 @@ body {
 .m-text-lined {
     line-height: 1.8 !important;
 }
-
+.m-text-decoration {
+    text-decoration: none;
+    color: #969797;
+}
+/*link*/
+.m-link-
 /*------opacity-------*/
 .m-opacity-mini {
     opacity: 0.8 !important;

@@ -14,6 +14,6 @@ zzspace.blog:
   imagePath: /upload/image/
   rootFilePath: /upload/
   mysql:
-    url: jdbc:mysql://localhost:3306/blog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://blog-mysql:3306/blog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
     password: C3srajh98e

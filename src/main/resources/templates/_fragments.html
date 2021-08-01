@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" >
   <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
   <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" th:href="@{/css/animate.min.css}"/>
   <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}"/>
   <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
 </head>
@@ -17,7 +17,7 @@
   <nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
       <div class="ui inverted secondary stackable menu">
-        <h2 class="ui teal header item">Warms</h2>
+        <h2 class="ui teal header item">MiHotel</h2>
         <a class="m-item item m-mobile-hide" th:href="@{/}" href="#" th:classappend="${n == 0} ? 'active'"><i class="home icon"></i>首页</a>
         <a class="m-item item m-mobile-hide" th:href="@{/index/type}" href="#" th:classappend="${n == 1} ? 'active'"><i class="idea icon"></i>分类</a>
         <a class="m-item item m-mobile-hide" th:href="@{/index/tag}" href="#" th:classappend="${n == 2} ? 'active'"><i class="tags icon"></i>标签</a>
@@ -65,12 +65,13 @@
           </div>
         </div>
         <div class="seven wide column">
-          <h4 th:text="#{footer.name}" class="ui inverted header">Warms</h4>
+          <h4 th:text="#{footer.name}" class="ui inverted header">miHotel</h4>
           <p class="m-text-thin m-text-space m-opacity-mini">这是我的个人博客会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
         </div>
       </div>
       <div class="ui inverted section divider"></div>
       <p th:text="#{footer.copyright}" class="m-text-thin m-text-space m-opacity-tiny">CopyRight@2021-2022 warms</p>
+      <a class="m-text-decoration" href="https://beian.miit.gov.cn" th:text="#{footer.copyright2}">dasdasdasda</a>
     </div>
   </footer>
 

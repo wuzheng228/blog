@@ -3,17 +3,13 @@ package com.zzspace.blog.dal.repository;
 import com.zzspace.blog.dal.domain.BlogDO;
 import com.zzspace.blog.dal.domain.BlogExample;
 import com.zzspace.blog.dal.mapper.BlogMapper;
-import com.zzspace.blog.dal.mapper.BlogTagMapper;
 import com.zzspace.blog.dao.BlogDAO;
-import com.zzspace.blog.model.query.Pageable;
 import com.zzspace.blog.model.query.BlogQuery;
+import com.zzspace.blog.model.query.Pageable;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
-import javax.jnlp.IntegrationService;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -127,7 +123,7 @@ public class BlogRepository extends BaseRepository<BlogDO> {
 
     public Long countBlogByDeleteAndRelease() {
         BlogExample example = new BlogExample();
-        example.createCriteria().andIsDeletedEqualTo(false);
+        example.createCriteria().andIsDeletedEqualTo(false).andRealeasedEqualTo(true);
         return blogMapper.countByExample(example);
     }
 

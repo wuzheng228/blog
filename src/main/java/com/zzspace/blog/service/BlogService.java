@@ -132,12 +132,14 @@ public class BlogService {
             return blogRepository.updateBlogById(blog);
         }
         int num = blogRepository.insertBlog(blog);
-        Long[] tagsIds = Arrays.stream( blogDTO.getTagsIds().split(",")).map(Long::parseLong).toArray(Long[]::new);
-        for (Long tagId : tagsIds) {
-            BlogTagDO blogTagDO = new BlogTagDO();
-            blogTagDO.setBlogId(blog.getId());
-            blogTagDO.setTagId(tagId);
-            blogTagRepository.save(blogTagDO);
+        if (StringUtils.isNotBlank(blogDTO.getTagsIds())) {
+            Long[] tagsIds = Arrays.stream(blogDTO.getTagsIds().split(",")).map(Long::parseLong).toArray(Long[]::new);
+            for (Long tagId : tagsIds) {
+                BlogTagDO blogTagDO = new BlogTagDO();
+                blogTagDO.setBlogId(blog.getId());
+                blogTagDO.setTagId(tagId);
+                blogTagRepository.save(blogTagDO);
+            }
         }
         return num;
     }

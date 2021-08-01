@@ -5,6 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @SpringBootApplication
 @ImportResource("classpath:beanRefContext.xml")
 public class BlogApplication {

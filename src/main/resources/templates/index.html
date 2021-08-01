@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../static/css/me.css">
-    <title>博客首页</title>
+    <title>我命由我不由天</title>
 </head>
 <body>
     <!--导航-->
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="five wide column">
                                     <a href="#" th:href="@{/index/show/{id}(id=${card.id})}" target="_blank">
-                                        <img th:src="${card.firstPicture}" src="https://dummyimage.com/800x450/000/fff" alt="" class="ui rounded image">
+                                        <img th:src="${card.firstPicture}" src="https://dummyimage.com/800x450/000/fff" alt="" class="ui medium rounded image">
                                     </a>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                         <!--*/-->
                     </div>
                     <!--bottom-->
-                    <div class="ui bottom attached segment">
+                    <div class="ui bottom attached segment" th:if="${indexInfo.total > 0}">
                         <div class="ui middle aligned three column grid">
                             <div class="column">
                                 <a href="" th:href="@{/(pageNo=${indexInfo.getPrevPage()})}" class="ui teal basic button">上一页</a>

@@ -94,7 +94,7 @@
                             </div>
                             <div class="five wide column">
                                 <a th:href="@{/index/show/{id}(id=${card.id})}"  href="#" target="_blank">
-                                    <img src="https://dummyimage.com/800x450/000/fff" alt="" class="ui rounded image">
+                                    <img th:src="${card.firstPicture}" src="https://dummyimage.com/800x450/000/fff" alt="" class="ui rounded image">
                                 </a>
                             </div>
                         </div>
